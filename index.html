@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -22,6 +21,7 @@
   .filter-btn[data-cat=alkaline].active{background:var(--accent-alkaline);border-color:var(--accent-alkaline)}
   .filter-btn[data-cat=aluminum].active{background:var(--accent-aluminum);border-color:var(--accent-aluminum)}
   .filter-btn[data-cat=all].active{background:var(--accent);border-color:var(--accent)}
+  .filter-btn[data-cat=wrong].active{background:#ef4444;border-color:#ef4444;color:#fff}
   .stats-bar{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:0 auto 28px;max-width:700px}
   .stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 20px;text-align:center;min-width:90px}
   .stat-num{font-family:'Space Mono',monospace;font-size:1.4rem;color:var(--accent)}
@@ -128,131 +128,200 @@
   <button class="btn btn-primary" onclick="restartAll()" style="margin:auto">もう一度挑戦</button>
 </div>
 <script>
-const CATEGORIES={alkali:{label:'アルカリ金属',cls:'badge-alkali'},alkaline:{label:'アルカリ土類金属',cls:'badge-alkaline'},aluminum:{label:'Al・Sn・Pb',cls:'badge-aluminum'}};
+const CATEGORIES={
+  alkali:{label:'アルカリ金属',cls:'badge-alkali'},
+  alkaline:{label:'アルカリ土類金属',cls:'badge-alkaline'},
+  aluminum:{label:'Al・Sn・Pb',cls:'badge-aluminum'}
+};
+
 const ALL_QUESTIONS=[
-{id:1,category:'alkali',question:`アルカリ金属は何族の元素か。`,answer:`第1族元素（水素を除く）`,explanation:`Li・Na・K・Rb・Cs・Frが含まれる。`},
-{id:2,category:'alkali',question:`アルカリ金属に含まれる元素を原子番号順に全て答えよ。`,answer:`Li（リチウム）、Na（ナトリウム）、K（カリウム）、Rb（ルビジウム）、Cs（セシウム）、Fr（フランシウム）`,explanation:`価電子が1個。全て1族（水素を除く）。`},
-{id:3,category:'alkali',question:`アルカリ金属を石油中に保存する理由を答えよ。`,answer:`空気中の水分・酸素と激しく反応するため、石油中に保存して空気と遮断する。`,explanation:`Na、Kなどは空気中に放置すると酸化・発火の危険がある。`},
-{id:4,category:'alkali',question:`アルカリ金属の物理的性質①：硬さはどうか。`,answer:`軟らかい。ナイフで切ることができる。`,explanation:`金属の中では非常に柔らかい部類。`},
-{id:5,category:'alkali',question:`アルカリ金属の物理的性質②：融点と密度は他の金属と比べてどうか。`,answer:`融点が低く、密度が小さい（軽い）。\nLi・Na・Kは水より密度が小さく、水に浮く。`,explanation:`典型的な金属（Fe・Cuなど）に比べ融点・密度ともに低い。`},
-{id:6,category:'alkali',question:`アルカリ金属の化学的性質①：反応性は原子番号が大きくなるとどう変化するか。`,answer:`原子番号が大きいほど反応性が強くなる。\nLi < Na < K < Rb < Cs の順に強い。`,explanation:`原子番号が大きいほどイオン化エネルギーが小さく、陽イオンになりやすい。`},
-{id:7,category:'alkali',question:`アルカリ金属の化学的性質②：水との反応の特徴を答えよ。`,answer:`水と反応してH₂を発生し、水酸化物の水溶液（強塩基）を生じる。\n反応式：2M + 2H₂O → 2MOH + H₂↑`,explanation:`Mはアルカリ金属。K以降は発火しながら激しく反応する。`},
-{id:8,category:'alkali',question:`Naと水の反応式を書け。`,answer:`2Na + 2H₂O → 2NaOH + H₂↑`,explanation:`NaOHは強塩基。H₂が発生し発火することもある。`},
-{id:9,category:'alkali',question:`Naを空気中で穏やかに燃焼させたときの生成物と反応式を書け。`,answer:`4Na + O₂ → 2Na₂O（酸化ナトリウム）`,explanation:`穏やかな条件でNa₂Oが生成する。`},
-{id:10,category:'alkali',question:`Naを過剰な酸素中で燃焼させたときの生成物と反応式を書け。`,answer:`2Na + O₂ → Na₂O₂（過酸化ナトリウム）`,explanation:`Na₂O₂は酸化剤・漂白剤として使われる。水と反応してH₂O₂を生じる。`},
-{id:11,category:'alkali',question:`NaOHの色・状態を答えよ。`,answer:`白色固体`,explanation:`水に非常によく溶けて強塩基性を示す。`},
-{id:12,category:'alkali',question:`NaOHの「潮解性」とはどういう性質か。`,answer:`空気中の水分を吸収して自ら溶けていく性質。`,explanation:`NaOHは潮解性をもつため密封保存が必要。`},
-{id:13,category:'alkali',question:`NaOHが空気中のCO₂（少量）を吸収する反応式を書け。`,answer:`2NaOH + CO₂ → Na₂CO₃ + H₂O`,explanation:`CO₂が少量の場合はNa₂CO₃（炭酸ナトリウム）が生成する。`},
-{id:14,category:'alkali',question:`NaOHが空気中のCO₂（過剰）を吸収する反応式を書け。`,answer:`NaOH + CO₂ → NaHCO₃`,explanation:`CO₂が過剰の場合はNaHCO₃（炭酸水素ナトリウム）が生成する。`},
-{id:15,category:'alkali',question:`Na₂CO₃と希塩酸HClの反応式を書け。`,answer:`Na₂CO₃ + 2HCl → 2NaCl + H₂O + CO₂↑`,explanation:`弱酸の塩に強酸を加えると弱酸が遊離する反応。CO₂発生。`},
-{id:16,category:'alkali',question:`NaHCO₃と希塩酸HClの反応式を書け。`,answer:`NaHCO₃ + HCl → NaCl + H₂O + CO₂↑`,explanation:`ベーキングパウダー・重曹の主成分。胃薬にも利用。`},
-{id:17,category:'alkali',question:`NaHCO₃を加熱したときの熱分解反応式を書け。`,answer:`2NaHCO₃ → Na₂CO₃ + H₂O + CO₂↑`,explanation:`ケーキが膨らむ原理。Na₂CO₃（炭酸ナトリウム）が残る。`},
-{id:18,category:'alkali',question:`ソルベー法の主反応式を書け。`,answer:`NaCl + NH₃ + H₂O + CO₂ → NaHCO₃↓ + NH₄Cl`,explanation:`飽和食塩水にNH₃とCO₂を吹き込むとNaHCO₃が先に沈殿する。`},
-{id:19,category:'alkali',question:`ソルベー法でNaHCO₃をNa₂CO₃に変える工程の反応式を書け。`,answer:`2NaHCO₃ → Na₂CO₃ + H₂O + CO₂↑（加熱）`,explanation:`生成したNa₂CO₃はガラス・洗剤・製紙の原料として重要。`},
-{id:20,category:'alkali',question:`Na₂CO₃·10H₂Oの俗称を答えよ。`,answer:`洗濯ソーダ`,explanation:`炭酸ナトリウム十水和物。洗浄剤として利用されてきた。`},
-{id:21,category:'alkali',question:`「風解」とはどういう現象か。Na₂CO₃·10H₂Oを例に答えよ。`,answer:`結晶が空気中で結晶水を失い粉末状になる現象。\nNa₂CO₃·10H₂O → Na₂CO₃·H₂O + 9H₂O`,explanation:`乾燥空気中に放置すると起こる。`},
-{id:22,category:'alkali',question:`石灰水（Ca(OH)₂水溶液）にCO₂を少量通じたときの反応式を書け。`,answer:`Ca(OH)₂ + CO₂ → CaCO₃↓ + H₂O`,explanation:`白色沈殿CaCO₃が生じ石灰水が白濁する。CO₂の検出に使用。`},
-{id:23,category:'alkali',question:`石灰水にCO₂を過剰に通じると白濁が消える。その反応式を書け。`,answer:`CaCO₃ + H₂O + CO₂ → Ca(HCO₃)₂`,explanation:`可溶性のCa(HCO₃)₂が生成して沈殿が溶けるため白濁が消える。`},
-{id:24,category:'alkali',question:`炎色反応でNaは何色か。`,answer:`黄色（橙黄色）`,explanation:`Naは非常に鮮明な黄色を示す。微量でも検出できる。`},
-{id:25,category:'alkali',question:`炎色反応でKは何色か。`,answer:`紫色`,explanation:`カリウムは紫色の炎色反応を示す。`},
-{id:26,category:'alkali',question:`炎色反応でLiは何色か。`,answer:`赤色`,explanation:`リチウムは赤色の炎色反応を示す。花火の赤色に利用。`},
-{id:27,category:'alkaline',question:`アルカリ土類金属は何族の元素か。`,answer:`第2族元素`,explanation:`Be・Mg・Ca・Sr・Ba・Raが含まれる。価電子2個。`},
-{id:28,category:'alkaline',question:`アルカリ土類金属に含まれる元素を原子番号順に全て答えよ。`,answer:`Be（ベリリウム）・Mg（マグネシウム）・Ca（カルシウム）・Sr（ストロンチウム）・Ba（バリウム）・Ra（ラジウム）`,explanation:`価電子2個。Ca以降は冷水と反応する。`},
-{id:29,category:'alkaline',question:`アルカリ土類金属のうち冷水と反応しないものはどれか。理由も答えよ。`,answer:`BeとMg。\n理由：表面に緻密な酸化被膜が形成され内部が保護されるから。`,explanation:`MgはCaと異なり冷水に反応しない。熱水や酸には溶ける。`},
-{id:30,category:'alkaline',question:`Mgと酸素の反応式を書け。`,answer:`2Mg + O₂ → 2MgO`,explanation:`白色の強い光を放って燃焼する。花火・フラッシュ照明に利用。`},
-{id:31,category:'alkaline',question:`Mgを空気中で燃焼させると何色の光が出るか。何に利用されるか。`,answer:`白色の強い光。\n利用：花火・フラッシュ照明・発炎筒`,explanation:`MgO（白色固体）が生成する。`},
-{id:32,category:'alkaline',question:`Mgと熱水の反応式を書け。`,answer:`Mg + 2H₂O → Mg(OH)₂ + H₂↑`,explanation:`冷水とはほぼ反応しないが、熱水とは反応する。`},
-{id:33,category:'alkaline',question:`Caと冷水の反応式を書け。`,answer:`Ca + 2H₂O → Ca(OH)₂ + H₂↑`,explanation:`Ca(OH)₂（消石灰）が生成。石灰水の主成分で弱塩基性。`},
-{id:34,category:'alkaline',question:`CaO（生石灰）と水の反応式を書け。`,answer:`CaO + H₂O → Ca(OH)₂`,explanation:`発熱反応。Ca(OH)₂（消石灰）が生成する。乾燥剤・土壌改良材に利用。`},
-{id:35,category:'alkaline',question:`CaO（生石灰）が水と反応するときの熱的な特徴を答えよ。`,answer:`激しく発熱する（発熱反応）。`,explanation:`携帯カイロや食品の加熱パックに利用される原理。`},
-{id:36,category:'alkaline',question:`Ca(OH)₂を加熱したときの反応式を書け。`,answer:`Ca(OH)₂ → CaO + H₂O`,explanation:`加熱による脱水分解。CaO（生石灰）に戻る。`},
-{id:37,category:'alkaline',question:`CaCO₃（石灰石）を強熱したときの反応式を書け。`,answer:`CaCO₃ → CaO + CO₂↑`,explanation:`約900℃以上で熱分解。セメント・石灰製造の基本反応。`},
-{id:38,category:'alkaline',question:`CaCO₃に希塩酸を加えたときの反応式を書け。`,answer:`CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂↑`,explanation:`石灰石・大理石・貝殻に塩酸を加えるとCO₂が発生する。`},
-{id:39,category:'alkaline',question:`Ca(HCO₃)₂水溶液を加熱したときの反応式を書け。また自然界での例を答えよ。`,answer:`Ca(HCO₃)₂ → CaCO₃↓ + H₂O + CO₂↑\n自然界：鍾乳洞・鍾乳石の形成`,explanation:`地下水中のCa(HCO₃)₂が洞窟内でCaCO₃として析出する。`},
-{id:40,category:'alkaline',question:`CaSO₄·2H₂O（石膏）を約130℃で加熱したときの生成物と反応式を書け。`,answer:`CaSO₄·2H₂O → CaSO₄·½H₂O（焼き石膏）+ 3/2 H₂O`,explanation:`焼き石膏は水を加えると固化するため型取り・ギプス・建築材料に利用。`},
-{id:41,category:'alkaline',question:`焼き石膏（CaSO₄·½H₂O）に水を加えたときの反応式と特徴を答えよ。`,answer:`CaSO₄·½H₂O + 3/2 H₂O → CaSO₄·2H₂O\n特徴：発熱しながら固化する`,explanation:`医療用ギプス・建築材料として利用される原理。`},
-{id:42,category:'alkaline',question:`Ba²⁺の確認反応：試薬・反応式・沈殿の色を答えよ。`,answer:`試薬：希硫酸（SO₄²⁻）\nBa²⁺ + SO₄²⁻ → BaSO₄↓（白色沈殿）`,explanation:`BaSO₄は水にも酸にも溶けない。X線造影剤（バリウム検査）に利用。`},
-{id:43,category:'alkaline',question:`炎色反応でCaは何色か。`,answer:`橙赤色`,explanation:`カルシウムは橙赤色の炎色反応を示す。`},
-{id:44,category:'alkaline',question:`炎色反応でSrは何色か。`,answer:`赤色（深赤色）`,explanation:`ストロンチウムは赤色の炎色反応を示す。花火の赤色に利用される。`},
-{id:45,category:'alkaline',question:`炎色反応でBaは何色か。`,answer:`黄緑色`,explanation:`バリウムは黄緑色の炎色反応を示す。`},
-{id:46,category:'aluminum',question:`Alの原料鉱石の名称と化学式を答えよ。`,answer:`ボーキサイト（Al₂O₃·nH₂O）`,explanation:`アルミナ（Al₂O₃）を精製したうえで溶融塩電解する。`},
-{id:47,category:'aluminum',question:`Alの工業的製錬法の名称と概要を答えよ。`,answer:`ホール・エルー法（溶融塩電解）\n概要：アルミナ（Al₂O₃）を氷晶石（Na₃AlF₆）に溶かして電気分解する`,explanation:`大量の電力を消費するため「電気の缶詰」と呼ばれる。`},
-{id:48,category:'aluminum',question:`Alの不動態とはどういう状態か。反応式も書け。`,answer:`表面に緻密なAl₂O₃の酸化被膜が形成され、内部を保護する状態。\n4Al + 3O₂ → 2Al₂O₃`,explanation:`アルマイトは陽極酸化でこの被膜を人工的に厚くしたもの。濃硝酸・濃硫酸でも不動態になる。`},
-{id:49,category:'aluminum',question:`Alと希塩酸HClの反応式を書け。`,answer:`2Al + 6HCl → 2AlCl₃ + 3H₂↑`,explanation:`AlはH₂よりイオン化傾向が大きいため酸に溶けてH₂を発生する。`},
-{id:50,category:'aluminum',question:`Alと水酸化ナトリウムNaOH水溶液の反応式を書け。`,answer:`2Al + 2NaOH + 6H₂O → 2NaAl(OH)₄ + 3H₂↑`,explanation:`Alが両性金属であることを示す反応。NaAlO₂ + H₂↑と書く場合もある。`},
-{id:51,category:'aluminum',question:`テルミット反応の反応式を書け。`,answer:`2Al + Fe₂O₃ → Al₂O₃ + 2Fe`,explanation:`AlはFeよりイオン化傾向が大きいためFe₂O₃を還元する。約3000℃の高熱を発生する。`},
-{id:52,category:'aluminum',question:`テルミット反応はどのような場面で利用されるか。`,answer:`鉄道レールの現場溶接（テルミット溶接）に利用される。`,explanation:`高熱で鉄を溶かして接合する。`},
-{id:53,category:'aluminum',question:`Al(OH)₃と希塩酸の反応式を書け。`,answer:`Al(OH)₃ + 3HCl → AlCl₃ + 3H₂O`,explanation:`Al(OH)₃の酸に溶ける性質（両性水酸化物の酸側）。`},
-{id:54,category:'aluminum',question:`Al(OH)₃とNaOH水溶液の反応式を書け。`,answer:`Al(OH)₃ + NaOH → NaAl(OH)₄`,explanation:`NaAlO₂ + 2H₂O とも書く。Al(OH)₃の塩基に溶ける性質。`},
-{id:55,category:'aluminum',question:`AlCl₃水溶液にNH₃水を加えたときの反応式を書け。`,answer:`AlCl₃ + 3NH₃ + 3H₂O → Al(OH)₃↓ + 3NH₄Cl`,explanation:`白色のAl(OH)₃が沈殿する。`},
-{id:56,category:'aluminum',question:`Al(OH)₃はNH₃水を過剰に加えても溶けない。理由を答えよ。`,answer:`NH₃水は弱塩基であり、Al(OH)₃を溶かすほどの塩基性がないから。（NaOH水溶液なら溶ける）`,explanation:`Fe(OH)₃も同様にNH₃水過剰では溶けない。これはAl³⁺とFe³⁺を他の金属イオンと区別する点。`},
-{id:57,category:'aluminum',question:`Al₂O₃と希塩酸の反応式を書け。`,answer:`Al₂O₃ + 6HCl → 2AlCl₃ + 3H₂O`,explanation:`Al₂O₃は両性酸化物の酸側の反応。`},
-{id:58,category:'aluminum',question:`Al₂O₃とNaOH水溶液の反応式を書け。`,answer:`Al₂O₃ + 2NaOH + 3H₂O → 2NaAl(OH)₄`,explanation:`Al₂O₃は両性酸化物の塩基側の反応。`},
-{id:59,category:'aluminum',question:`ミョウバンの化学式と正式名称を答えよ。`,answer:`化学式：AlK(SO₄)₂·12H₂O\n正式名称：硫酸アルミニウムカリウム十二水和物`,explanation:`複塩。正八面体の結晶形をもつ。`},
-{id:60,category:'aluminum',question:`ミョウバンの主な用途を2つ答えよ。`,answer:`媒染剤（染色時の色止め）・浄水剤`,explanation:`水に溶かすとAl³⁺が加水分解してAl(OH)₃のコロイドを形成し、不純物を吸着して沈殿させる。`},
-{id:61,category:'aluminum',question:`スズSnの代表的な酸化数を2つ答えよ。`,answer:`+2（Sn²⁺）と+4（Sn⁴⁺）`,explanation:`SnCl₂は+2、SnCl₄は+4の酸化数をもつ。`},
-{id:62,category:'aluminum',question:`ブリキとはどういうものか。また傷がつくと腐食しやすい理由を答えよ。`,answer:`鉄板にスズ（Sn）をめっきしたもの。\n理由：SnのイオンカFe傾向がFeより小さく、傷がつくとFeが先に酸化されるから。`,explanation:`缶詰などに使われるが、傷に弱い欠点がある。`},
-{id:63,category:'aluminum',question:`トタンとはどういうものか。傷がついても腐食しにくい理由を答えよ。`,answer:`鉄板に亜鉛（Zn）をめっきしたもの。\n理由：ZnのイオンカFe傾向がFeより大きく、傷がつくとZnが先に溶けてFeを保護するから。`,explanation:`屋根・外壁材に使われる。犠牲防食の原理。`},
-{id:64,category:'aluminum',question:`鉛Pbの代表的な酸化数を2つ答えよ。`,answer:`+2（Pb²⁺）と+4（Pb⁴⁺）`,explanation:`Pb²⁺が安定。PbO₂（+4）は鉛蓄電池の正極として重要。`},
-{id:65,category:'aluminum',question:`Pb²⁺に希硫酸を加えたときの反応式と沈殿の色を答えよ。`,answer:`Pb²⁺ + SO₄²⁻ → PbSO₄↓（白色沈殿）`,explanation:`PbSO₄は難溶性。Pb²⁺の確認反応。`},
-{id:66,category:'aluminum',question:`Pb²⁺に希塩酸を加えたときの反応式と沈殿の色を答えよ。`,answer:`Pb²⁺ + 2Cl⁻ → PbCl₂↓（白色沈殿）`,explanation:`PbCl₂は冷水に難溶、熱水に溶ける。Ag⁺との分離に利用。`},
-{id:67,category:'aluminum',question:`鉛蓄電池の正極・負極の物質を答えよ。`,answer:`正極：PbO₂（二酸化鉛）\n負極：Pb（鉛）`,explanation:`電解液は希硫酸H₂SO₄。放電すると両極ともPbSO₄になる。`},
-{id:68,category:'aluminum',question:`鉛蓄電池の電解液を答えよ。`,answer:`希硫酸（H₂SO₄）`,explanation:`充電すると希硫酸の濃度が戻る（放電すると薄くなる）。`},
-{id:69,category:'aluminum',question:`両性金属として代表的な4種を答えよ。`,answer:`Al（アルミニウム）・Zn（亜鉛）・Sn（スズ）・Pb（鉛）`,explanation:`いずれも酸にもNaOH水溶液にも溶けてH₂を発生する。`},
-{id:70,category:'aluminum',question:`Alと希硫酸H₂SO₄の反応式を書け。`,answer:`2Al + 3H₂SO₄ → Al₂(SO₄)₃ + 3H₂↑`,explanation:`Alは希硫酸に溶けてH₂を発生する。ただし濃硫酸・濃硝酸では不動態になり溶けない。`},
+{id:1,category:'alkali',question:'アルカリ金属は何族の元素か。',answer:'第1族元素（水素を除く）',explanation:'Li・Na・K・Rb・Cs・Frが含まれる。'},
+{id:2,category:'alkali',question:'アルカリ金属に含まれる元素を原子番号順に全て答えよ。',answer:'Li（リチウム）、Na（ナトリウム）、K（カリウム）、Rb（ルビジウム）、Cs（セシウム）、Fr（フランシウム）',explanation:'価電子が1個。全て1族（水素を除く）。'},
+{id:3,category:'alkali',question:'アルカリ金属を石油中に保存する理由を答えよ。',answer:'空気中の水分・酸素と激しく反応するため、石油中に保存して空気と遮断する。',explanation:'Na、Kなどは空気中に放置すると酸化・発火の危険がある。'},
+{id:4,category:'alkali',question:'アルカリ金属の物理的性質①：硬さはどうか。',answer:'軟らかい。ナイフで切ることができる。',explanation:'金属の中では非常に柔らかい部類。'},
+{id:5,category:'alkali',question:'アルカリ金属の物理的性質②：融点と密度は他の金属と比べてどうか。',answer:'融点が低く、密度が小さい（軽い）。\nLi・Na・Kは水より密度が小さく、水に浮く。',explanation:'典型的な金属（Fe・Cuなど）に比べ融点・密度ともに低い。'},
+{id:6,category:'alkali',question:'アルカリ金属の化学的性質①：反応性は原子番号が大きくなるとどう変化するか。',answer:'原子番号が大きいほど反応性が強くなる。\nLi < Na < K < Rb < Cs の順に強い。',explanation:'原子番号が大きいほどイオン化エネルギーが小さく、陽イオンになりやすい。'},
+{id:7,category:'alkali',question:'アルカリ金属の化学的性質②：水との反応の特徴を答えよ。',answer:'水と反応してH₂を発生し、水酸化物の水溶液（強塩基）を生じる。\n反応式：2M + 2H₂O → 2MOH + H₂↑',explanation:'Mはアルカリ金属。K以降は発火しながら激しく反応する。'},
+{id:8,category:'alkali',question:'Naと水の反応式を書け。',answer:'2Na + 2H₂O → 2NaOH + H₂↑',explanation:'NaOHは強塩基。H₂が発生し発火することもある。'},
+{id:9,category:'alkali',question:'Naを空気中で穏やかに燃焼させたときの生成物と反応式を書け。',answer:'4Na + O₂ → 2Na₂O（酸化ナトリウム）',explanation:'穏やかな条件でNa₂Oが生成する。'},
+{id:10,category:'alkali',question:'Naを過剰な酸素中で燃焼させたときの生成物と反応式を書け。',answer:'2Na + O₂ → Na₂O₂（過酸化ナトリウム）',explanation:'Na₂O₂は酸化剤・漂白剤として使われる。水と反応してH₂O₂を生じる。'},
+{id:11,category:'alkali',question:'NaOHの色・状態を答えよ。',answer:'白色固体',explanation:'水に非常によく溶けて強塩基性を示す。'},
+{id:12,category:'alkali',question:'NaOHの「潮解性」とはどういう性質か。',answer:'空気中の水分を吸収して自ら溶けていく性質。',explanation:'NaOHは潮解性をもつため密封保存が必要。'},
+{id:13,category:'alkali',question:'NaOHが空気中のCO₂（少量）を吸収する反応式を書け。',answer:'2NaOH + CO₂ → Na₂CO₃ + H₂O',explanation:'CO₂が少量の場合はNa₂CO₃（炭酸ナトリウム）が生成する。'},
+{id:14,category:'alkali',question:'NaOHが空気中のCO₂（過剰）を吸収する反応式を書け。',answer:'NaOH + CO₂ → NaHCO₃',explanation:'CO₂が過剰の場合はNaHCO₃（炭酸水素ナトリウム）が生成する。'},
+{id:15,category:'alkali',question:'Na₂CO₃と希塩酸HClの反応式を書け。',answer:'Na₂CO₃ + 2HCl → 2NaCl + H₂O + CO₂↑',explanation:'弱酸の塩に強酸を加えると弱酸が遊離する反応。CO₂発生。'},
+{id:16,category:'alkali',question:'NaHCO₃と希塩酸HClの反応式を書け。',answer:'NaHCO₃ + HCl → NaCl + H₂O + CO₂↑',explanation:'ベーキングパウダー・重曹の主成分。胃薬にも利用。'},
+{id:17,category:'alkali',question:'NaHCO₃を加熱したときの熱分解反応式を書け。',answer:'2NaHCO₃ → Na₂CO₃ + H₂O + CO₂↑',explanation:'ケーキが膨らむ原理。Na₂CO₃（炭酸ナトリウム）が残る。'},
+{id:18,category:'alkali',question:'ソルベー法の主反応式を書け。',answer:'NaCl + NH₃ + H₂O + CO₂ → NaHCO₃↓ + NH₄Cl',explanation:'飽和食塩水にNH₃とCO₂を吹き込むとNaHCO₃が先に沈殿する。'},
+{id:19,category:'alkali',question:'ソルベー法でNaHCO₃をNa₂CO₃に変える工程の反応式を書け。',answer:'2NaHCO₃ → Na₂CO₃ + H₂O + CO₂↑（加熱）',explanation:'生成したNa₂CO₃はガラス・洗剤・製紙の原料として重要。'},
+{id:20,category:'alkali',question:'Na₂CO₃·10H₂Oの俗称を答えよ。',answer:'洗濯ソーダ',explanation:'炭酸ナトリウム十水和物。洗浄剤として利用されてきた。'},
+{id:21,category:'alkali',question:'「風解」とはどういう現象か。Na₂CO₃·10H₂Oを例に答えよ。',answer:'結晶が空気中で結晶水を失い粉末状になる現象。\nNa₂CO₃·10H₂O → Na₂CO₃·H₂O + 9H₂O',explanation:'乾燥空気中に放置すると起こる。'},
+{id:22,category:'alkali',question:'石灰水（Ca(OH)₂水溶液）にCO₂を少量通じたときの反応式を書け。',answer:'Ca(OH)₂ + CO₂ → CaCO₃↓ + H₂O',explanation:'白色沈殿CaCO₃が生じ石灰水が白濁する。CO₂の検出に使用。'},
+{id:23,category:'alkali',question:'石灰水にCO₂を過剰に通じると白濁が消える。その反応式を書け。',answer:'CaCO₃ + H₂O + CO₂ → Ca(HCO₃)₂',explanation:'可溶性のCa(HCO₃)₂が生成して沈殿が溶けるため白濁が消える。'},
+{id:24,category:'alkali',question:'炎色反応でNaは何色か。',answer:'黄色（橙黄色）',explanation:'Naは非常に鮮明な黄色を示す。微量でも検出できる。'},
+{id:25,category:'alkali',question:'炎色反応でKは何色か。',answer:'紫色',explanation:'カリウムは紫色の炎色反応を示す。'},
+{id:26,category:'alkali',question:'炎色反応でLiは何色か。',answer:'赤色',explanation:'リチウムは赤色の炎色反応を示す。花火の赤色に利用。'},
+{id:27,category:'alkaline',question:'アルカリ土類金属は何族の元素か。',answer:'第2族元素',explanation:'Be・Mg・Ca・Sr・Ba・Raが含まれる。価電子2個。'},
+{id:28,category:'alkaline',question:'アルカリ土類金属に含まれる元素を原子番号順に全て答えよ。',answer:'Be（ベリリウム）・Mg（マグネシウム）・Ca（カルシウム）・Sr（ストロンチウム）・Ba（バリウム）・Ra（ラジウム）',explanation:'価電子2個。Ca以降は冷水と反応する。'},
+{id:29,category:'alkaline',question:'アルカリ土類金属のうち冷水と反応しないものはどれか。理由も答えよ。',answer:'BeとMg。\n理由：表面に緻密な酸化被膜が形成され内部が保護されるから。',explanation:'MgはCaと異なり冷水に反応しない。熱水や酸には溶ける。'},
+{id:30,category:'alkaline',question:'Mgと酸素の反応式を書け。',answer:'2Mg + O₂ → 2MgO',explanation:'白色の強い光を放って燃焼する。花火・フラッシュ照明に利用。'},
+{id:31,category:'alkaline',question:'Mgを空気中で燃焼させると何色の光が出るか。何に利用されるか。',answer:'白色の強い光。\n利用：花火・フラッシュ照明・発炎筒',explanation:'MgO（白色固体）が生成する。'},
+{id:32,category:'alkaline',question:'Mgと熱水の反応式を書け。',answer:'Mg + 2H₂O → Mg(OH)₂ + H₂↑',explanation:'冷水とはほぼ反応しないが、熱水とは反応する。'},
+{id:33,category:'alkaline',question:'Caと冷水の反応式を書け。',answer:'Ca + 2H₂O → Ca(OH)₂ + H₂↑',explanation:'Ca(OH)₂（消石灰）が生成。石灰水の主成分で弱塩基性。'},
+{id:34,category:'alkaline',question:'CaO（生石灰）と水の反応式を書け。',answer:'CaO + H₂O → Ca(OH)₂',explanation:'発熱反応。Ca(OH)₂（消石灰）が生成する。乾燥剤・土壌改良材に利用。'},
+{id:35,category:'alkaline',question:'CaO（生石灰）が水と反応するときの熱的な特徴を答えよ。',answer:'激しく発熱する（発熱反応）。',explanation:'携帯カイロや食品の加熱パックに利用される原理。'},
+{id:36,category:'alkaline',question:'Ca(OH)₂を加熱したときの反応式を書け。',answer:'Ca(OH)₂ → CaO + H₂O',explanation:'加熱による脱水分解。CaO（生石灰）に戻る。'},
+{id:37,category:'alkaline',question:'CaCO₃（石灰石）を強熱したときの反応式を書け。',answer:'CaCO₃ → CaO + CO₂↑',explanation:'約900℃以上で熱分解。セメント・石灰製造の基本反応。'},
+{id:38,category:'alkaline',question:'CaCO₃に希塩酸を加えたときの反応式を書け。',answer:'CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂↑',explanation:'石灰石・大理石・貝殻に塩酸を加えるとCO₂が発生する。'},
+{id:39,category:'alkaline',question:'Ca(HCO₃)₂水溶液を加熱したときの反応式を書け。また自然界での例を答えよ。',answer:'Ca(HCO₃)₂ → CaCO₃↓ + H₂O + CO₂↑\n自然界：鍾乳洞・鍾乳石の形成',explanation:'地下水中のCa(HCO₃)₂が洞窟内でCaCO₃として析出する。'},
+{id:40,category:'alkaline',question:'CaSO₄·2H₂O（石膏）を約130℃で加熱したときの生成物と反応式を書け。',answer:'CaSO₄·2H₂O → CaSO₄·½H₂O（焼き石膏）+ 3/2 H₂O',explanation:'焼き石膏は水を加えると固化するため型取り・ギプス・建築材料に利用。'},
+{id:41,category:'alkaline',question:'焼き石膏（CaSO₄·½H₂O）に水を加えたときの反応式と特徴を答えよ。',answer:'CaSO₄·½H₂O + 3/2 H₂O → CaSO₄·2H₂O\n特徴：発熱しながら固化する',explanation:'医療用ギプス・建築材料として利用される原理。'},
+{id:42,category:'alkaline',question:'Ba²⁺の確認反応：試薬・反応式・沈殿の色を答えよ。',answer:'試薬：希硫酸（SO₄²⁻）\nBa²⁺ + SO₄²⁻ → BaSO₄↓（白色沈殿）',explanation:'BaSO₄は水にも酸にも溶けない。X線造影剤（バリウム検査）に利用。'},
+{id:43,category:'alkaline',question:'炎色反応でCaは何色か。',answer:'橙赤色',explanation:'カルシウムは橙赤色の炎色反応を示す。'},
+{id:44,category:'alkaline',question:'炎色反応でSrは何色か。',answer:'赤色（深赤色）',explanation:'ストロンチウムは赤色の炎色反応を示す。花火の赤色に利用される。'},
+{id:45,category:'alkaline',question:'炎色反応でBaは何色か。',answer:'黄緑色',explanation:'バリウムは黄緑色の炎色反応を示す。'},
+{id:46,category:'aluminum',question:'Alの原料鉱石の名称と化学式を答えよ。',answer:'ボーキサイト（Al₂O₃·nH₂O）',explanation:'アルミナ（Al₂O₃）を精製したうえで溶融塩電解する。'},
+{id:47,category:'aluminum',question:'Alの工業的製錬法の名称と概要を答えよ。',answer:'ホール・エルー法（溶融塩電解）\n概要：アルミナ（Al₂O₃）を氷晶石（Na₃AlF₆）に溶かして電気分解する',explanation:'大量の電力を消費するため「電気の缶詰」と呼ばれる。'},
+{id:48,category:'aluminum',question:'Alの不動態とはどういう状態か。反応式も書け。',answer:'表面に緻密なAl₂O₃の酸化被膜が形成され、内部を保護する状態。\n4Al + 3O₂ → 2Al₂O₃',explanation:'アルマイトは陽極酸化でこの被膜を人工的に厚くしたもの。濃硝酸・濃硫酸でも不動態になる。'},
+{id:49,category:'aluminum',question:'Alと希塩酸HClの反応式を書け。',answer:'2Al + 6HCl → 2AlCl₃ + 3H₂↑',explanation:'AlはH₂よりイオン化傾向が大きいため酸に溶けてH₂を発生する。'},
+{id:50,category:'aluminum',question:'Alと水酸化ナトリウムNaOH水溶液の反応式を書け。',answer:'2Al + 2NaOH + 6H₂O → 2NaAl(OH)₄ + 3H₂↑',explanation:'Alが両性金属であることを示す反応。NaAlO₂ + H₂↑と書く場合もある。'},
+{id:51,category:'aluminum',question:'テルミット反応の反応式を書け。',answer:'2Al + Fe₂O₃ → Al₂O₃ + 2Fe',explanation:'AlはFeよりイオン化傾向が大きいためFe₂O₃を還元する。約3000℃の高熱を発生する。'},
+{id:52,category:'aluminum',question:'テルミット反応はどのような場面で利用されるか。',answer:'鉄道レールの現場溶接（テルミット溶接）に利用される。',explanation:'高熱で鉄を溶かして接合する。'},
+{id:53,category:'aluminum',question:'Al(OH)₃と希塩酸の反応式を書け。',answer:'Al(OH)₃ + 3HCl → AlCl₃ + 3H₂O',explanation:'Al(OH)₃の酸に溶ける性質（両性水酸化物の酸側）。'},
+{id:54,category:'aluminum',question:'Al(OH)₃とNaOH水溶液の反応式を書け。',answer:'Al(OH)₃ + NaOH → NaAl(OH)₄',explanation:'NaAlO₂ + 2H₂O とも書く。Al(OH)₃の塩基に溶ける性質。'},
+{id:55,category:'aluminum',question:'AlCl₃水溶液にNH₃水を加えたときの反応式を書け。',answer:'AlCl₃ + 3NH₃ + 3H₂O → Al(OH)₃↓ + 3NH₄Cl',explanation:'白色のAl(OH)₃が沈殿する。'},
+{id:56,category:'aluminum',question:'Al(OH)₃はNH₃水を過剰に加えても溶けない。理由を答えよ。',answer:'NH₃水は弱塩基であり、Al(OH)₃を溶かすほどの塩基性がないから。（NaOH水溶液なら溶ける）',explanation:'Fe(OH)₃も同様にNH₃水過剰では溶けない。これはAl³⁺とFe³⁺を他の金属イオンと区別する点。'},
+{id:57,category:'aluminum',question:'Al₂O₃と希塩酸の反応式を書け。',answer:'Al₂O₃ + 6HCl → 2AlCl₃ + 3H₂O',explanation:'Al₂O₃は両性酸化物の酸側の反応。'},
+{id:58,category:'aluminum',question:'Al₂O₃とNaOH水溶液の反応式を書け。',answer:'Al₂O₃ + 2NaOH + 3H₂O → 2NaAl(OH)₄',explanation:'Al₂O₃は両性酸化物の塩基側の反応。'},
+{id:59,category:'aluminum',question:'ミョウバンの化学式と正式名称を答えよ。',answer:'化学式：AlK(SO₄)₂·12H₂O\n正式名称：硫酸アルミニウムカリウム十二水和物',explanation:'複塩。正八面体の結晶形をもつ。'},
+{id:60,category:'aluminum',question:'ミョウバンの主な用途を2つ答えよ。',answer:'媒染剤（染色時の色止め）・浄水剤',explanation:'水に溶かすとAl³⁺が加水分解してAl(OH)₃のコロイドを形成し、不純物を吸着して沈殿させる。'},
+{id:61,category:'aluminum',question:'スズSnの代表的な酸化数を2つ答えよ。',answer:'+2（Sn²⁺）と+4（Sn⁴⁺）',explanation:'SnCl₂は+2、SnCl₄は+4の酸化数をもつ。'},
+{id:62,category:'aluminum',question:'ブリキとはどういうものか。また傷がつくと腐食しやすい理由を答えよ。',answer:'鉄板にスズ（Sn）をめっきしたもの。\n理由：SnのイオンカFe傾向がFeより小さく、傷がつくとFeが先に酸化されるから。',explanation:'缶詰などに使われるが、傷に弱い欠点がある。'},
+{id:63,category:'aluminum',question:'トタンとはどういうものか。傷がついても腐食しにくい理由を答えよ。',answer:'鉄板に亜鉛（Zn）をめっきしたもの。\n理由：ZnのイオンカFe傾向がFeより大きく、傷がつくとZnが先に溶けてFeを保護するから。',explanation:'屋根・外壁材に使われる。犠牲防食の原理。'},
+{id:64,category:'aluminum',question:'鉛Pbの代表的な酸化数を2つ答えよ。',answer:'+2（Pb²⁺）と+4（Pb⁴⁺）',explanation:'Pb²⁺が安定。PbO₂（+4）は鉛蓄電池の正極として重要。'},
+{id:65,category:'aluminum',question:'Pb²⁺に希硫酸を加えたときの反応式と沈殿の色を答えよ。',answer:'Pb²⁺ + SO₄²⁻ → PbSO₄↓（白色沈殿）',explanation:'PbSO₄は難溶性。Pb²⁺の確認反応。'},
+{id:66,category:'aluminum',question:'Pb²⁺に希塩酸を加えたときの反応式と沈殿の色を答えよ。',answer:'Pb²⁺ + 2Cl⁻ → PbCl₂↓（白色沈殿）',explanation:'PbCl₂は冷水に難溶、熱水に溶ける。Ag⁺との分離に利用。'},
+{id:67,category:'aluminum',question:'鉛蓄電池の正極・負極の物質を答えよ。',answer:'正極：PbO₂（二酸化鉛）\n負極：Pb（鉛）',explanation:'電解液は希硫酸H₂SO₄。放電すると両極ともPbSO₄になる。'},
+{id:68,category:'aluminum',question:'鉛蓄電池の電解液を答えよ。',answer:'希硫酸（H₂SO₄）',explanation:'充電すると希硫酸の濃度が戻る（放電すると薄くなる）。'},
+{id:69,category:'aluminum',question:'両性金属として代表的な4種を答えよ。',answer:'Al（アルミニウム）・Zn（亜鉛）・Sn（スズ）・Pb（鉛）',explanation:'いずれも酸にもNaOH水溶液にも溶けてH₂を発生する。'},
+{id:70,category:'aluminum',question:'Alと希硫酸H₂SO₄の反応式を書け。',answer:'2Al + 3H₂SO₄ → Al₂(SO₄)₃ + 3H₂↑',explanation:'Alは希硫酸に溶けてH₂を発生する。ただし濃硫酸・濃硝酸では不動態になり溶けない。'}
 ];
 
-const WRONG_KEY=‘chem_flash1_wrong’;
-function loadWrongIds(){try{return new Set(JSON.parse(localStorage.getItem(WRONG_KEY)||’[]’));}catch(e){return new Set();}}
-function saveWrongIds(s){localStorage.setItem(WRONG_KEY,JSON.stringify([…s]));}
-let wrongIds=loadWrongIds();
-let currentFilter=‘all’;
-function updateWrongBadge(){const cnt=wrongIds.size;const el=document.getElementById(‘wrong-count-badge’);if(el)el.textContent=cnt;const btn=document.getElementById(‘clear-wrong-btn’);if(btn)btn.style.display=cnt>0?’’:‘none’;}
-function clearWrongList(){if(!confirm(‘間違えリストをリセットしますか？’))return;wrongIds.clear();saveWrongIds(wrongIds);updateWrongBadge();if(currentFilter===‘wrong’){filteredQ=[];renderCard();}}
-let filteredQ=[…ALL_QUESTIONS],currentIndex=0,isFlipped=false,correctCount=0,wrongCount=0,answered=new Set();
-function setFilter(cat,btn){document.querySelectorAll(’.filter-btn’).forEach(b=>b.classList.remove(‘active’));btn.classList.add(‘active’);currentFilter=cat;if(cat===‘all’){filteredQ=[…ALL_QUESTIONS];}else if(cat===‘wrong’){filteredQ=ALL_QUESTIONS.filter(q=>wrongIds.has(q.id));}else{filteredQ=ALL_QUESTIONS.filter(q=>q.category===cat);}restartAll();}
-function shuffleArray(arr){for(let i=arr.length-1;i>0;i–){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}}
-function shuffleAndReset(){shuffleArray(filteredQ);currentIndex=0;isFlipped=false;correctCount=0;wrongCount=0;answered.clear();document.getElementById(‘complete-screen’).classList.remove(‘visible’);document.getElementById(‘card-area’).style.display=’’;document.getElementById(‘result-btns’).classList.remove(‘visible’);renderCard();}
-function restartAll(){currentIndex=0;isFlipped=false;correctCount=0;wrongCount=0;answered.clear();document.getElementById(‘complete-screen’).classList.remove(‘visible’);document.getElementById(‘card-area’).style.display=’’;document.getElementById(‘result-btns’).classList.remove(‘visible’);renderCard();updateWrongBadge();}
-function renderCard(){
-if(currentIndex>=filteredQ.length){showComplete();return;}
-const q=filteredQ[currentIndex],cat=CATEGORIES[q.category];
-document.getElementById(‘card-num’).textContent=`Q ${currentIndex+1} / ${filteredQ.length}`;
-[‘card-badge’,‘card-badge-back’].forEach(id=>{const el=document.getElementById(id);el.className=`card-badge ${cat.cls}`;el.textContent=cat.label;});
-document.getElementById(‘card-question’).textContent=q.question;
-document.getElementById(‘card-answer’).textContent=q.answer;
-document.getElementById(‘card-explanation’).textContent=q.explanation;
-document.getElementById(‘flashcard’).classList.remove(‘flipped’);
-isFlipped=false;document.getElementById(‘result-btns’).classList.remove(‘visible’);
-updateStats();updateWrongBadge();
+const WRONG_KEY='chem_flash1_wrong';
+function loadWrongIds(){try{return new Set(JSON.parse(localStorage.getItem(WRONG_KEY)||'[]'));}catch(e){return new Set();}}
+function saveWrongIds(s){try{localStorage.setItem(WRONG_KEY,JSON.stringify(Array.from(s)));}catch(e){}}
+var wrongIds=loadWrongIds();
+var currentFilter='all';
+
+function updateWrongBadge(){
+  var cnt=wrongIds.size;
+  var el=document.getElementById('wrong-count-badge');
+  if(el)el.textContent=cnt;
+  var btn=document.getElementById('clear-wrong-btn');
+  if(btn)btn.style.display=cnt>0?'':'none';
 }
-function flipCard(){isFlipped=!isFlipped;document.getElementById(‘flashcard’).classList.toggle(‘flipped’,isFlipped);if(isFlipped)document.getElementById(‘result-btns’).classList.add(‘visible’);}
-function markResult(correct){if(!answered.has(currentIndex)){answered.add(currentIndex);const qid=filteredQ[currentIndex].id;if(correct){correctCount++;wrongIds.delete(qid);}else{wrongCount++;wrongIds.add(qid);}saveWrongIds(wrongIds);updateWrongBadge();}nextCard();}
+function clearWrongList(){
+  if(!confirm('間違えリストをリセットしますか？'))return;
+  wrongIds.clear();
+  saveWrongIds(wrongIds);
+  updateWrongBadge();
+  if(currentFilter==='wrong'){filteredQ=[];renderCard();}
+}
+
+var filteredQ=ALL_QUESTIONS.slice();
+var currentIndex=0,isFlipped=false,correctCount=0,wrongCount=0,answered=new Set();
+
+function setFilter(cat,btn){
+  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  currentFilter=cat;
+  if(cat==='all'){filteredQ=ALL_QUESTIONS.slice();}
+  else if(cat==='wrong'){filteredQ=ALL_QUESTIONS.filter(function(q){return wrongIds.has(q.id);});}
+  else{filteredQ=ALL_QUESTIONS.filter(function(q){return q.category===cat;});}
+  restartAll();
+}
+function shuffleArray(arr){
+  for(var i=arr.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var t=arr[i];arr[i]=arr[j];arr[j]=t;
+  }
+}
+function shuffleAndReset(){
+  shuffleArray(filteredQ);
+  currentIndex=0;isFlipped=false;correctCount=0;wrongCount=0;answered.clear();
+  document.getElementById('complete-screen').classList.remove('visible');
+  document.getElementById('card-area').style.display='';
+  document.getElementById('result-btns').classList.remove('visible');
+  renderCard();
+}
+function restartAll(){
+  currentIndex=0;isFlipped=false;correctCount=0;wrongCount=0;answered.clear();
+  document.getElementById('complete-screen').classList.remove('visible');
+  document.getElementById('card-area').style.display='';
+  document.getElementById('result-btns').classList.remove('visible');
+  renderCard();updateWrongBadge();
+}
+function renderCard(){
+  if(currentIndex>=filteredQ.length){showComplete();return;}
+  var q=filteredQ[currentIndex],cat=CATEGORIES[q.category];
+  document.getElementById('card-num').textContent='Q '+(currentIndex+1)+' / '+filteredQ.length;
+  ['card-badge','card-badge-back'].forEach(function(id){
+    var el=document.getElementById(id);
+    el.className='card-badge '+cat.cls;
+    el.textContent=cat.label;
+  });
+  document.getElementById('card-question').textContent=q.question;
+  document.getElementById('card-answer').textContent=q.answer;
+  document.getElementById('card-explanation').textContent=q.explanation;
+  document.getElementById('flashcard').classList.remove('flipped');
+  isFlipped=false;
+  document.getElementById('result-btns').classList.remove('visible');
+  updateStats();updateWrongBadge();
+}
+function flipCard(){
+  isFlipped=!isFlipped;
+  document.getElementById('flashcard').classList.toggle('flipped',isFlipped);
+  if(isFlipped)document.getElementById('result-btns').classList.add('visible');
+}
+function markResult(correct){
+  if(!answered.has(currentIndex)){
+    answered.add(currentIndex);
+    var qid=filteredQ[currentIndex].id;
+    if(correct){correctCount++;wrongIds.delete(qid);}
+    else{wrongCount++;wrongIds.add(qid);}
+    saveWrongIds(wrongIds);updateWrongBadge();
+  }
+  nextCard();
+}
 function nextCard(){if(currentIndex<filteredQ.length-1){currentIndex++;renderCard();}else showComplete();}
-function prevCard(){if(currentIndex>0){currentIndex–;renderCard();}}
+function prevCard(){if(currentIndex>0){currentIndex--;renderCard();}}
 function updateStats(){
-document.getElementById(‘stat-total’).textContent=filteredQ.length;
-document.getElementById(‘stat-correct’).textContent=correctCount;
-document.getElementById(‘stat-wrong’).textContent=wrongCount;
-document.getElementById(‘stat-remain’).textContent=filteredQ.length-answered.size;
-const pct=filteredQ.length>0?Math.round((answered.size/filteredQ.length)*100):0;
-document.getElementById(‘progress-fill’).style.width=pct+’%’;
-document.getElementById(‘progress-text’).textContent=`${answered.size} / ${filteredQ.length}`;
+  document.getElementById('stat-total').textContent=filteredQ.length;
+  document.getElementById('stat-correct').textContent=correctCount;
+  document.getElementById('stat-wrong').textContent=wrongCount;
+  document.getElementById('stat-remain').textContent=filteredQ.length-answered.size;
+  var pct=filteredQ.length>0?Math.round((answered.size/filteredQ.length)*100):0;
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('progress-text').textContent=answered.size+' / '+filteredQ.length;
 }
 function showComplete(){
-document.getElementById(‘card-area’).style.display=‘none’;
-document.getElementById(‘result-btns’).classList.remove(‘visible’);
-const total=answered.size,pct=total>0?Math.round((correctCount/total)*100):0;
-const emoji=pct>=90?‘🏆’:pct>=70?‘🎉’:pct>=50?‘💪’:‘📚’;
-document.getElementById(‘complete-emoji’).textContent=emoji;
-document.getElementById(‘complete-score’).textContent=`${correctCount} / ${total}`;
-document.getElementById(‘complete-sub’).textContent=`正答率 ${pct}% — ${pct>=80?'すばらしい！':pct>=60?'もう少し！':'復習しよう！'}`;
-document.getElementById(‘complete-screen’).classList.add(‘visible’);
-updateStats();
+  document.getElementById('card-area').style.display='none';
+  document.getElementById('result-btns').classList.remove('visible');
+  var total=answered.size,pct=total>0?Math.round((correctCount/total)*100):0;
+  var emoji=pct>=90?'🏆':pct>=70?'🎉':pct>=50?'💪':'📚';
+  document.getElementById('complete-emoji').textContent=emoji;
+  document.getElementById('complete-score').textContent=correctCount+' / '+total;
+  document.getElementById('complete-sub').textContent='正答率 '+pct+'% — '+(pct>=80?'すばらしい！':pct>=60?'もう少し！':'復習しよう！');
+  document.getElementById('complete-screen').classList.add('visible');
+  updateStats();
 }
-function toggleTheme(){document.body.classList.toggle(‘light’);document.querySelector(’.theme-toggle’).textContent=document.body.classList.contains(‘light’)?‘🌙’:‘☀️’;}
-renderCard();updateWrongBadge();
-</script>
+function toggleTheme(){
+  document.body.classList.toggle('light');
+  document.querySelector('.theme-toggle').textContent=document.body.classList.contains('light')?'🌙':'☀️';
+}
 
+renderCard();
+updateWrongBadge();
+</script>
 </body>
 </html>
