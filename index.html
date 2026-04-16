@@ -75,7 +75,7 @@
 <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
 <header>
   <h1>⚗ CHEMISTRY FLASH I</h1>
-  <p>第2編 金属元素（典型元素） — 全100問</p>
+  <p>第2編 金属元素（典型元素） — 全83問</p>
 </header>
 <div class="filter-bar">
   <button class="filter-btn active" data-cat="all" onclick="setFilter('all',this)">すべて</button>
@@ -135,113 +135,431 @@ const CATEGORIES={
 };
 
 const ALL_QUESTIONS=[
-// ===== アルカリ金属 =====
-{id:1,category:'alkali',question:'アルカリ金属は何族の元素か。',answer:'第1族元素（水素を除く）',explanation:'Li・Na・K・Rb・Cs・Frが含まれる。'},
-{id:2,category:'alkali',question:'アルカリ金属に含まれる元素を原子番号順に全て答えよ。',answer:'Li（リチウム）、Na（ナトリウム）、K（カリウム）、Rb（ルビジウム）、Cs（セシウム）、Fr（フランシウム）',explanation:'価電子が1個。全て1族（水素を除く）。'},
-{id:3,category:'alkali',question:'アルカリ金属の価電子数を答えよ。',answer:'1個',explanation:'最外殻に電子が1個あるため、1価の陽イオンになりやすい。'},
-{id:4,category:'alkali',question:'アルカリ金属を石油中に保存する理由を答えよ。',answer:'空気中の水分・酸素と激しく反応するため、石油中に保存して空気と遮断する。',explanation:'Na、Kなどは空気中に放置すると酸化・発火の危険がある。'},
-{id:5,category:'alkali',question:'アルカリ金属の物理的性質①：硬さはどうか。',answer:'軟らかい。ナイフで切ることができる。',explanation:'金属の中では非常に柔らかい部類。'},
-{id:6,category:'alkali',question:'アルカリ金属の物理的性質②：融点と密度は他の金属と比べてどうか。',answer:'融点が低く、密度が小さい（軽い）。\nLi・Na・Kは水より密度が小さく、水に浮く。',explanation:'典型的な金属（Fe・Cuなど）に比べ融点・密度ともに低い。'},
-{id:7,category:'alkali',question:'アルカリ金属各元素の融点（概算）を答えよ。',answer:'Li：181℃、Na：98℃、K：64℃、Rb：39℃、Cs：29℃',explanation:'原子番号が大きくなるほど融点が低くなる。Csは体温近くで溶ける。'},
-{id:8,category:'alkali',question:'アルカリ金属の反応性は原子番号が大きくなるとどう変化するか。',answer:'原子番号が大きいほど反応性が強くなる。\nLi < Na < K < Rb < Cs の順に強い。',explanation:'原子番号が大きいほどイオン化エネルギーが小さく、陽イオンになりやすい。'},
-{id:9,category:'alkali',question:'アルカリ金属と水の反応の特徴を答えよ。',answer:'水と反応してH₂を発生し、強塩基性の水酸化物水溶液を生じる。\n2M + 2H₂O → 2MOH + H₂↑',explanation:'K以降は発火しながら激しく反応する。'},
-{id:10,category:'alkali',question:'Naと水の反応式を書け。',answer:'2Na + 2H₂O → 2NaOH + H₂↑',explanation:'NaOHは強塩基。H₂が発生し発火することもある。Naは水面を動き回る。'},
-{id:11,category:'alkali',question:'Naを空気中で穏やかに加熱したときの反応式と生成物を答えよ。',answer:'4Na + O₂ → 2Na₂O（酸化ナトリウム）',explanation:'穏やかな条件でNa₂Oが生成する。'},
-{id:12,category:'alkali',question:'Naを過剰な酸素中で燃焼させたときの反応式と生成物を答えよ。',answer:'2Na + O₂ → Na₂O₂（過酸化ナトリウム）',explanation:'Na₂O₂（過酸化ナトリウム）は強い酸化剤・漂白剤。水と反応してH₂O₂を生じる。'},
-{id:13,category:'alkali',question:'NaOHの色・状態と特徴を答えよ。',answer:'白色固体。水に非常によく溶けて強塩基性を示す。潮解性をもつ。',explanation:'潮解性：空気中の水分を吸収して自ら溶けていく性質。密封保存が必要。'},
-{id:14,category:'alkali',question:'NaOHが空気中のCO₂（少量）を吸収する反応式を書け。',answer:'2NaOH + CO₂ → Na₂CO₃ + H₂O',explanation:'CO₂が少量の場合はNa₂CO₃（炭酸ナトリウム）が生成する。'},
-{id:15,category:'alkali',question:'NaOHが空気中のCO₂（過剰）を吸収する反応式を書け。',answer:'NaOH + CO₂ → NaHCO₃',explanation:'CO₂が過剰の場合はNaHCO₃（炭酸水素ナトリウム）が生成する。'},
-{id:16,category:'alkali',question:'Na₂CO₃と希塩酸HClの反応式を書け。',answer:'Na₂CO₃ + 2HCl → 2NaCl + H₂O + CO₂↑',explanation:'弱酸の塩に強酸を加えると弱酸が遊離する反応。CO₂発生。'},
-{id:17,category:'alkali',question:'NaHCO₃と希塩酸HClの反応式を書け。',answer:'NaHCO₃ + HCl → NaCl + H₂O + CO₂↑',explanation:'重曹（ベーキングパウダー）の主成分。胃薬にも利用。'},
-{id:18,category:'alkali',question:'NaHCO₃を加熱したときの熱分解反応式を書け。',answer:'2NaHCO₃ → Na₂CO₃ + H₂O + CO₂↑',explanation:'ケーキが膨らむ原理。加熱するとNa₂CO₃が残る。'},
-{id:19,category:'alkali',question:'Na₂CO₃·10H₂Oの俗称と「風解」について説明せよ。',answer:'俗称：洗濯ソーダ\n風解：乾燥空気中に放置すると結晶水を失い白色粉末（Na₂CO₃·H₂O）になる現象',explanation:'Na₂CO₃·10H₂O → Na₂CO₃·H₂O + 9H₂O'},
-{id:20,category:'alkali',question:'ソルベー法（アンモニアソーダ法）の主反応式を書け。',answer:'NaCl + NH₃ + H₂O + CO₂ → NaHCO₃↓ + NH₄Cl',explanation:'飽和食塩水にNH₃とCO₂を吹き込むとNaHCO₃が先に沈殿する。'},
-{id:21,category:'alkali',question:'ソルベー法でNaHCO₃をNa₂CO₃に変える工程の反応式を書け。',answer:'2NaHCO₃ → Na₂CO₃ + H₂O + CO₂↑（加熱）',explanation:'生成したNa₂CO₃はガラス・洗剤・製紙の原料として重要。'},
-{id:22,category:'alkali',question:'ソルベー法でNH₃を回収する工程の反応式を書け。',answer:'2NH₄Cl + Ca(OH)₂ → CaCl₂ + 2NH₃↑ + 2H₂O',explanation:'副生成物のNH₄Clに消石灰を加えてNH₃を回収・循環する。'},
-{id:23,category:'alkali',question:'塩化ナトリウムNaClを電気分解（塩化ナトリウムの電解）したときの陰極・陽極での反応を答えよ。',answer:'陰極：2H₂O + 2e⁻ → H₂↑ + 2OH⁻（水の還元）\n陽極：2Cl⁻ → Cl₂↑ + 2e⁻（塩素発生）',explanation:'イオン交換膜法では陽極側にCl₂、陰極側にH₂とNaOHが得られる。'},
-{id:24,category:'alkali',question:'炎色反応でLi・Na・Kはそれぞれ何色か。',answer:'Li：赤色\nNa：黄色（橙黄色）\nK：紫色',explanation:'Naは微量でも鮮明な黄色を示す。花火の色に利用される。'},
-{id:25,category:'alkali',question:'炎色反応でNaが黄色を示すのはなぜか。',answer:'Na原子の電子が高いエネルギー状態に励起され、基底状態に戻るときに黄色の光を放出するから。',explanation:'各元素固有のスペクトルを放つため、炎色反応で元素の同定ができる。'},
 
-// ===== アルカリ土類金属 =====
-{id:26,category:'alkaline',question:'アルカリ土類金属は何族の元素か。価電子数も答えよ。',answer:'第2族元素。価電子数は2個。',explanation:'Be・Mg・Ca・Sr・Ba・Raが含まれる。2価の陽イオンになりやすい。'},
-{id:27,category:'alkaline',question:'アルカリ土類金属に含まれる元素を原子番号順に全て答えよ。',answer:'Be（ベリリウム）・Mg（マグネシウム）・Ca（カルシウム）・Sr（ストロンチウム）・Ba（バリウム）・Ra（ラジウム）',explanation:'価電子2個。Ca以降は冷水と反応する。'},
-{id:28,category:'alkaline',question:'アルカリ土類金属各元素の融点（概算）を答えよ。',answer:'Be：1282℃、Mg：649℃、Ca：839℃、Sr：769℃、Ba：725℃',explanation:'アルカリ金属より融点が高い。'},
-{id:29,category:'alkaline',question:'アルカリ土類金属のうち冷水と反応しないものはどれか。理由も答えよ。',answer:'BeとMg。\n理由：表面に緻密な酸化被膜が形成されて内部が保護されるから。',explanation:'MgはCaと異なり冷水に反応しない。熱水や酸には溶ける。'},
-{id:30,category:'alkaline',question:'Mgと酸素の反応式を書け。',answer:'2Mg + O₂ → 2MgO',explanation:'白色の強い光を放って燃焼する。花火・フラッシュ照明に利用。'},
-{id:31,category:'alkaline',question:'Mgと熱水の反応式を書け。',answer:'Mg + 2H₂O → Mg(OH)₂ + H₂↑',explanation:'冷水とはほぼ反応しないが、熱水とは反応する。'},
-{id:32,category:'alkaline',question:'Caと冷水の反応式を書け。',answer:'Ca + 2H₂O → Ca(OH)₂ + H₂↑',explanation:'Ca(OH)₂（消石灰）が生成。石灰水の主成分で弱塩基性。'},
-{id:33,category:'alkaline',question:'CaO（生石灰）と水の反応式と特徴を答えよ。',answer:'CaO + H₂O → Ca(OH)₂\n特徴：激しく発熱する（発熱反応）',explanation:'乾燥剤・土壌改良材。携帯カイロや加熱パックに利用される原理。'},
-{id:34,category:'alkaline',question:'Ca(OH)₂（消石灰）を加熱したときの反応式を書け。',answer:'Ca(OH)₂ → CaO + H₂O',explanation:'加熱による脱水分解。CaO（生石灰）に戻る。約900℃。'},
-{id:35,category:'alkaline',question:'CaCO₃（石灰石・大理石）を強熱したときの反応式を書け。',answer:'CaCO₃ → CaO + CO₂↑',explanation:'約900℃以上で熱分解。セメント・石灰製造の基本反応。'},
-{id:36,category:'alkaline',question:'CaCO₃に希塩酸を加えたときの反応式を書け。',answer:'CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂↑',explanation:'石灰石・大理石・貝殻に塩酸を加えるとCO₂が発生する。'},
-{id:37,category:'alkaline',question:'石灰水（Ca(OH)₂水溶液）にCO₂を少量通じたときの変化と反応式を書け。',answer:'白濁する。\nCa(OH)₂ + CO₂ → CaCO₃↓ + H₂O',explanation:'白色沈殿CaCO₃が生じる。CO₂の検出に使用。'},
-{id:38,category:'alkaline',question:'石灰水にCO₂を過剰に通じると白濁が消える。その反応式を書け。',answer:'CaCO₃ + H₂O + CO₂ → Ca(HCO₃)₂',explanation:'可溶性のCa(HCO₃)₂（炭酸水素カルシウム）が生成して沈殿が溶ける。'},
-{id:39,category:'alkaline',question:'Ca(HCO₃)₂水溶液を加熱したときの反応式と自然界での例を答えよ。',answer:'Ca(HCO₃)₂ → CaCO₃↓ + H₂O + CO₂↑\n自然界：鍾乳洞・鍾乳石の形成',explanation:'地下水中のCa(HCO₃)₂が洞窟内でCaCO₃として析出する。'},
-{id:40,category:'alkaline',question:'CaSO₄に関係する「石膏」と「焼き石膏」の関係と化学式を答えよ。',answer:'石膏：CaSO₄·2H₂O（二水和物）\n焼き石膏：CaSO₄·½H₂O（半水和物）\n石膏を120〜140℃で加熱すると焼き石膏になる',explanation:'CaSO₄·2H₂O → CaSO₄·½H₂O + 3/2 H₂O'},
-{id:41,category:'alkaline',question:'焼き石膏（CaSO₄·½H₂O）に水を加えたときの反応式と特徴を答えよ。',answer:'CaSO₄·½H₂O + 3/2 H₂O → CaSO₄·2H₂O\n特徴：発熱しながら固化する',explanation:'医療用ギプス・建築材料・型取りに利用される。'},
-{id:42,category:'alkaline',question:'アルカリ土類金属の硫酸塩・炭酸塩の水への溶解性をまとめよ。',answer:'硫酸塩：MgSO₄（溶ける）、CaSO₄（わずかに溶ける）、BaSO₄（溶けない）\n炭酸塩：MgCO₃・CaCO₃・BaCO₃（いずれも難溶）',explanation:'BaSO₄は最も溶けにくく、X線造影剤（バリウム検査）に利用。'},
-{id:43,category:'alkaline',question:'Ba²⁺の確認反応を答えよ。',answer:'試薬：希硫酸（SO₄²⁻）\nBa²⁺ + SO₄²⁻ → BaSO₄↓（白色沈殿）\n酸にも水にも溶けない',explanation:'BaSO₄は難溶性で化学的に安定。X線で不透明なためX線造影剤として使われる。'},
-{id:44,category:'alkaline',question:'アルカリ土類金属の水酸化物の溶解性の傾向を答えよ。',answer:'Be(OH)₂（難溶）、Mg(OH)₂（難溶）、Ca(OH)₂（わずかに溶ける）、Ba(OH)₂（溶ける）\n→ 原子番号が大きいほど溶けやすくなる',explanation:'Ca(OH)₂の水溶液が石灰水。Ba(OH)₂は強塩基。'},
-{id:45,category:'alkaline',question:'炎色反応でCa・Sr・Baはそれぞれ何色か。',answer:'Ca：橙赤色\nSr：赤色（深赤色）\nBa：黄緑色',explanation:'花火の色として利用される。SrはLiと同じく赤色だが深みが異なる。'},
-{id:46,category:'alkaline',question:'Mgの工業的製錬方法を答えよ。',answer:'海水中のMg²⁺をCa(OH)₂でMg(OH)₂として沈殿させ、塩酸でMgCl₂にしたのち溶融塩電解する。',explanation:'海水が主な原料。軽量合金として航空機・自動車に利用。'},
-{id:47,category:'alkaline',question:'Caの工業的製錬方法を答えよ。',answer:'塩化カルシウムCaCl₂の溶融塩電解（CaCl₂ → Ca + Cl₂）',explanation:'Caは反応性が高いため電気分解で製錬する。'},
+// ============================================================
+// アルカリ金属（image2・image5 より）
+// ============================================================
+{id:1,category:'alkali',
+question:'アルカリ金属は何族の元素か。',
+answer:'第1族元素（水素を除く）',
+explanation:'Li・Na・K・Rb・Cs・Frが含まれる。'},
 
-// ===== Al・Sn・Pb =====
-{id:48,category:'aluminum',question:'Alの原料鉱石の名称と化学式を答えよ。',answer:'ボーキサイト（Al₂O₃·nH₂O）',explanation:'アルミナ（Al₂O₃）を精製したうえで溶融塩電解する。'},
-{id:49,category:'aluminum',question:'Alの工業的製錬法の名称と概要を答えよ。',answer:'ホール・エルー法（溶融塩電解）\n概要：アルミナ（Al₂O₃）を氷晶石（Na₃AlF₆）に溶かして電気分解する',explanation:'大量の電力を消費するため「電気の缶詰」と呼ばれる。'},
-{id:50,category:'aluminum',question:'Al単体の特徴を3つ答えよ。',answer:'① 軽い（密度 2.7 g/cm³）\n② 電気・熱伝導性が高い\n③ 表面に酸化被膜を形成して耐食性をもつ（不動態）',explanation:'アルマイトは陽極酸化でこの被膜を人工的に厚くしたもの。'},
-{id:51,category:'aluminum',question:'Alの不動態とはどういう状態か。反応式も書け。',answer:'表面に緻密なAl₂O₃の酸化被膜が形成され内部を保護する状態。\n4Al + 3O₂ → 2Al₂O₃',explanation:'濃硝酸・濃硫酸でも不動態になり溶けない。'},
-{id:52,category:'aluminum',question:'Alと希塩酸HClの反応式を書け。',answer:'2Al + 6HCl → 2AlCl₃ + 3H₂↑',explanation:'AlはH₂よりイオン化傾向が大きいため酸に溶けてH₂を発生する。'},
-{id:53,category:'aluminum',question:'Alと希硫酸H₂SO₄の反応式を書け。',answer:'2Al + 3H₂SO₄ → Al₂(SO₄)₃ + 3H₂↑',explanation:'希硫酸には溶けるが、濃硫酸では不動態になり溶けない。'},
-{id:54,category:'aluminum',question:'Alと水酸化ナトリウムNaOH水溶液の反応式を書け。',answer:'2Al + 2NaOH + 6H₂O → 2Na[Al(OH)₄] + 3H₂↑',explanation:'Alが両性金属であることを示す反応。Na[Al(OH)₄]はテトラヒドロキシドアルミン酸ナトリウム。'},
-{id:55,category:'aluminum',question:'テルミット反応の反応式と特徴を答えよ。',answer:'2Al + Fe₂O₃ → Al₂O₃ + 2Fe\n特徴：約3000℃の高熱を発生する',explanation:'AlはFeよりイオン化傾向が大きいためFe₂O₃を還元する。鉄道レールの現場溶接（テルミット溶接）に利用。'},
-{id:56,category:'aluminum',question:'Al(OH)₃の両性を示す反応式を2つ書け。',answer:'酸側：Al(OH)₃ + 3HCl → AlCl₃ + 3H₂O\n塩基側：Al(OH)₃ + NaOH → Na[Al(OH)₄]',explanation:'両性水酸化物のため酸にも塩基にも溶ける。'},
-{id:57,category:'aluminum',question:'Al³⁺水溶液にNH₃水（少量・過剰）を加えたときの変化を答えよ。',answer:'少量・過剰いずれも白色沈殿Al(OH)₃が生成して溶けない。\nAl³⁺ + 3OH⁻ → Al(OH)₃↓',explanation:'NH₃水は弱塩基のためAl(OH)₃を溶かすほどの塩基性がない。NaOH過剰なら溶ける。'},
-{id:58,category:'aluminum',question:'AlCl₃水溶液にNH₃水を加えたときの反応式を書け。',answer:'AlCl₃ + 3NH₃ + 3H₂O → Al(OH)₃↓ + 3NH₄Cl',explanation:'白色のAl(OH)₃が沈殿する。'},
-{id:59,category:'aluminum',question:'Al₂O₃の両性を示す反応式を2つ書け。',answer:'酸側：Al₂O₃ + 6HCl → 2AlCl₃ + 3H₂O\n塩基側：Al₂O₃ + 2NaOH + 3H₂O → 2Na[Al(OH)₄]',explanation:'Al₂O₃は両性酸化物。'},
-{id:60,category:'aluminum',question:'ミョウバンの化学式・正式名称・結晶形を答えよ。',answer:'化学式：AlK(SO₄)₂·12H₂O\n正式名称：硫酸アルミニウムカリウム十二水和物\n結晶形：正八面体',explanation:'複塩。Al³⁺ + K⁺ + 2SO₄²⁻ + 12H₂Oの組成。'},
-{id:61,category:'aluminum',question:'ミョウバンの主な用途を2つ答えよ。',answer:'① 媒染剤（染色時の色止め）\n② 浄水剤（Al(OH)₃のコロイドが不純物を吸着）',explanation:'水に溶かすとAl³⁺が加水分解してAl(OH)₃のコロイドを形成する。'},
-{id:62,category:'aluminum',question:'ミョウバンの電離式を書け。',answer:'AlK(SO₄)₂ → Al³⁺ + K⁺ + 2SO₄²⁻',explanation:'12H₂Oは結晶水。水溶液中ではAl³⁺・K⁺・SO₄²⁻に電離する。'},
-{id:63,category:'aluminum',question:'スズSnの代表的な酸化数と代表化合物を答えよ。',answer:'+2（SnCl₂など）と+4（SnCl₄・SnO₂など）',explanation:'Sn²⁺は還元剤として働く。SnO₂は白色の両性酸化物。'},
-{id:64,category:'aluminum',question:'スズSnの水への溶解性を答えよ。',answer:'水には溶けない（両性金属だが常温の水とは反応しない）。\n酸・塩基には溶ける。',explanation:'Sn + 2HCl → SnCl₂ + H₂↑（酸）\nSn + 2NaOH + 2H₂O → Na₂[Sn(OH)₄] + H₂↑（塩基）'},
-{id:65,category:'aluminum',question:'ブリキとはどういうものか。傷がつくと腐食しやすい理由を答えよ。',answer:'鉄板にスズ（Sn）をめっきしたもの。\n理由：Snのイオン化傾向がFeより小さく、傷がつくとFeが先に酸化されるから（Feが犠牲になる）。',explanation:'イオン化傾向：Sn < Fe。缶詰などに使われるが傷に弱い。'},
-{id:66,category:'aluminum',question:'トタンとはどういうものか。傷がついても腐食しにくい理由を答えよ。',answer:'鉄板に亜鉛（Zn）をめっきしたもの。\n理由：Znのイオン化傾向がFeより大きく、傷がつくとZnが先に溶けてFeを保護するから（犠牲防食）。',explanation:'イオン化傾向：Zn > Fe。屋根・外壁材に使われる。'},
-{id:67,category:'aluminum',question:'鉛Pbの代表的な酸化数と代表化合物を答えよ。',answer:'+2（PbCl₂・PbSO₄・PbS など）と+4（PbO₂・Pb(CH₃COO)₂など）',explanation:'Pb²⁺が安定。PbO₂（+4）は鉛蓄電池の正極として重要。'},
-{id:68,category:'aluminum',question:'Pb²⁺に希硫酸を加えたときの反応式と沈殿の色を答えよ。',answer:'Pb²⁺ + SO₄²⁻ → PbSO₄↓（白色沈殿）',explanation:'PbSO₄は難溶性。Pb²⁺の確認反応。'},
-{id:69,category:'aluminum',question:'Pb²⁺に希塩酸を加えたときの反応式と沈殿の特徴を答えよ。',answer:'Pb²⁺ + 2Cl⁻ → PbCl₂↓（白色沈殿）\n冷水に難溶、熱水に溶ける',explanation:'Ag⁺との分離に利用（PbCl₂は熱水に溶けるがAgClは溶けない）。'},
-{id:70,category:'aluminum',question:'Pb²⁺にH₂Sを通じたときの反応式と沈殿の色を答えよ。',answer:'Pb²⁺ + S²⁻ → PbS↓（黒色沈殿）',explanation:'PbSは黒色で難溶性。'},
-{id:71,category:'aluminum',question:'Pb²⁺にクロム酸カリウムK₂CrO₄を加えたときの反応式と沈殿の色を答えよ。',answer:'Pb²⁺ + CrO₄²⁻ → PbCrO₄↓（黄色沈殿）',explanation:'PbCrO₄は黄色沈殿。Pb²⁺の確認反応に使われる。'},
-{id:72,category:'aluminum',question:'鉛蓄電池の正極・負極・電解液を答えよ。',answer:'正極：PbO₂（二酸化鉛）\n負極：Pb（鉛）\n電解液：希硫酸（H₂SO₄）',explanation:'放電すると両極ともPbSO₄になる。充電で元に戻る。'},
-{id:73,category:'aluminum',question:'鉛蓄電池の放電時の各極の変化（反応式）を書け。',answer:'正極：PbO₂ + SO₄²⁻ + 4H⁺ + 2e⁻ → PbSO₄ + 2H₂O\n負極：Pb + SO₄²⁻ → PbSO₄ + 2e⁻',explanation:'放電するほど希硫酸の濃度が薄くなる（PbSO₄が増えてSO₄²⁻が消費される）。'},
-{id:74,category:'aluminum',question:'両性金属として代表的な4種を答えよ。',answer:'Al（アルミニウム）・Zn（亜鉛）・Sn（スズ）・Pb（鉛）',explanation:'いずれも酸にもNaOH水溶液にも溶けてH₂を発生する。'},
-{id:75,category:'aluminum',question:'PbのNaOH水溶液との反応式を書け。',answer:'Pb + 2NaOH + 2H₂O → Na₂[Pb(OH)₄] + H₂↑',explanation:'Pbも両性金属。Na₂[Pb(OH)₄]はテトラヒドロキシド鉛(II)酸ナトリウム。'},
-{id:76,category:'aluminum',question:'Pb(OH)₂の性質を答えよ。',answer:'白色沈殿。両性水酸化物。\n酸にも過剰NaOHにも溶ける。\nPb(OH)₂ + 2NaOH → Na₂[Pb(OH)₄]',explanation:'Pb(OH)₂はAl(OH)₃・Zn(OH)₂と同様に両性水酸化物。'},
-{id:77,category:'aluminum',question:'SnCl₂·2H₂Oの用途を答えよ。',answer:'還元剤として利用される（Sn²⁺がSn⁴⁺に酸化されることで酸化剤を還元する）。',explanation:'SnCl₂は還元力が強く、有機化合物の還元やめっきの前処理に使われる。'},
-{id:78,category:'aluminum',question:'アルミニウムに関連する「アルマイト」とはどういうものか。',answer:'アルミニウムを陽極酸化して表面のAl₂O₃被膜を人工的に厚くしたもの。耐食性・硬さが向上する。',explanation:'鍋・弁当箱・建材などに利用される。'},
-{id:79,category:'aluminum',question:'アルミニウムの合金「ジュラルミン」の成分と特徴を答えよ。',answer:'成分：Al-Cu-Mg合金\n特徴：軽量で高強度',explanation:'航空機・船体・スポーツ用品に利用される。'},
-{id:80,category:'aluminum',question:'Alを用いた合金の代表例を2つ（成分・用途）答えよ。',answer:'① ジュラルミン（Al-Cu-Mg）：航空機・軽量高強度材\n② 超硬アルミ合金（Al-Mg-Si等）：建材・自動車',explanation:'Alは軽量なため合金にして強化することで様々な用途に使われる。'},
+{id:2,category:'alkali',
+question:'アルカリ金属に含まれる元素を原子番号順に答えよ。',
+answer:'Li（リチウム）、Na（ナトリウム）、K（カリウム）、Rb（ルビジウム）、Cs（セシウム）、Fr（フランシウム）',
+explanation:'価電子が1個。最外殻電子数はすべて1。'},
 
-// 追加：教科書から拾った内容
-{id:81,category:'alkali',question:'NaOHの工業的製法を答えよ。',answer:'塩化ナトリウム水溶液のイオン交換膜法電気分解\n陰極：2H₂O + 2e⁻ → H₂↑ + 2OH⁻',explanation:'陽極でCl₂、陰極でH₂とNaOHが得られる。イオン交換膜でNaOHとCl₂が混合しないようにしている。'},
-{id:82,category:'alkali',question:'Na₂CO₃（炭酸ナトリウム）の主な工業的用途を3つ答えよ。',answer:'① ガラスの原料\n② 洗剤・石鹸の製造\n③ 製紙（パルプ処理）',explanation:'ソルベー法で大量生産される重要な工業薬品。'},
-{id:83,category:'alkali',question:'アルカリ金属が1価の陽イオンになりやすい理由を答えよ。',answer:'最外殻電子が1個だけで、その電子を失うと安定な希ガス型電子配置になるから。',explanation:'イオン化エネルギーが小さく陽イオンになりやすい。'},
-{id:84,category:'alkaline',question:'Ca(OH)₂が「消石灰」・CaOが「生石灰」・CaCO₃が「石灰石」と呼ばれる。それぞれの外観の特徴を答えよ。',answer:'石灰石CaCO₃：白色固体（天然鉱物）\n生石灰CaO：白色固体\n消石灰Ca(OH)₂：白色粉末（水溶液が石灰水）',explanation:'石灰の変化：CaCO₃ →（強熱）→ CaO →（水）→ Ca(OH)₂'},
-{id:85,category:'alkaline',question:'セメントの主原料と製造方法の概要を答えよ。',answer:'主原料：石灰石（CaCO₃）・粘土・石膏\n概要：石灰石と粘土を混合して高温で焼成しクリンカーにし、石膏を加えて粉砕する',explanation:'水を加えると水和反応で固化する。土木・建築に必須の材料。'},
-{id:86,category:'alkaline',question:'MgSO₄・CaSO₄・BaSO₄のそれぞれの水への溶解性を答えよ。',answer:'MgSO₄：水に溶ける\nCaSO₄：わずかに溶ける（難溶）\nBaSO₄：ほとんど溶けない（非常に難溶）',explanation:'原子番号が大きくなるほど硫酸塩は溶けにくくなる。'},
-{id:87,category:'alkaline',question:'Mg(OH)₂・Ca(OH)₂・Ba(OH)₂のそれぞれの水への溶解性を答えよ。',answer:'Mg(OH)₂：水にほとんど溶けない\nCa(OH)₂：わずかに溶ける（石灰水）\nBa(OH)₂：よく溶ける（強塩基）',explanation:'原子番号が大きくなるほど水酸化物は溶けやすくなる（硫酸塩と逆の傾向）。'},
-{id:88,category:'aluminum',question:'SnO₂（酸化スズ(IV)）の性質を答えよ。',answer:'白色の固体。両性酸化物。\n酸にも塩基にも溶ける。',explanation:'Sn + O₂ → SnO₂。SnO₂は透明電極などにも利用される。'},
-{id:89,category:'aluminum',question:'Pb（鉛）の単体の特徴を3つ答えよ。',answer:'① やわらかく加工しやすい金属\n② 密度が大きい（11.4 g/cm³）\n③ X線を遮蔽する性質をもつ',explanation:'融点328℃。放射線遮蔽材・鉛蓄電池・はんだなどに利用。'},
-{id:90,category:'aluminum',question:'Pb(NO₃)₂（硝酸鉛(II)）水溶液にNaOH水溶液を加えたときの変化を答えよ。',answer:'白色沈殿Pb(OH)₂が生成する。\nPb²⁺ + 2OH⁻ → Pb(OH)₂↓\n過剰NaOHでは溶解：Pb(OH)₂ + 2OH⁻ → [Pb(OH)₄]²⁻',explanation:'Pb(OH)₂は両性水酸化物。'},
-{id:91,category:'alkali',question:'KOH（水酸化カリウム）の特徴を答えよ。',answer:'白色固体。強塩基。潮解性をもつ。\nNaOHと同様に空気中のCO₂を吸収する。',explanation:'石鹸製造（NaOHは固形石鹸、KOHは液体石鹸の原料）に利用。'},
-{id:92,category:'alkali',question:'Li（リチウム）の特徴的な物理的性質を答えよ。',answer:'金属中で最も軽い（密度0.53 g/cm³）。\n金属中で最も融点が高いアルカリ金属（181℃）。',explanation:'リチウムイオン電池の負極材料として現代の技術に不可欠。'},
-{id:93,category:'alkali',question:'Cs（セシウム）の特徴を答えよ。',answer:'融点が約29℃と低く、常温近くで液体になる。アルカリ金属中最も反応性が高い。',explanation:'原子時計・光電管に利用される。'},
-{id:94,category:'alkaline',question:'Ba(OH)₂は何性か。また水への溶解性を答えよ。',answer:'強塩基性。水によく溶ける。',explanation:'Ba²⁺は毒性があるが、BaSO₄は難溶で体内で吸収されないためX線造影剤として安全に使える。'},
-{id:95,category:'alkaline',question:'Mg²⁺を含む水溶液からMg(OH)₂を沈殿させる試薬を答えよ。',answer:'NaOH水溶液またはNH₃水（アンモニア水）\nMg²⁺ + 2OH⁻ → Mg(OH)₂↓（白色沈殿）',explanation:'Mg(OH)₂は白色難溶性。過剰NH₃水でも溶けない（錯イオンを作らない）。'},
-{id:96,category:'aluminum',question:'アルミニウムと塩化ナトリウム水溶液は反応するか。',answer:'反応しない。\nAlは不動態被膜（Al₂O₃）が表面を保護するため、中性のNaCl水溶液とは反応しない。',explanation:'ただし被膜が傷つくとゆっくり反応することがある。'},
-{id:97,category:'aluminum',question:'アルミニウムの電気伝導率は金属の中でどの程度か。',answer:'銀・銅・金に次いで4番目に大きい（Ag > Cu > Au > Al）。\n軽量のため電線材料として広く利用される。',explanation:'体積あたりではCuに劣るが、質量あたりではCuより優れている。'},
-{id:98,category:'aluminum',question:'Sn²⁺の還元作用を示す反応例を1つ書け。',answer:'2FeCl₃ + SnCl₂ → 2FeCl₂ + SnCl₄\n（Fe³⁺をFe²⁺に還元する）',explanation:'Sn²⁺は還元剤として働きやすく、有機合成や分析化学で利用される。'},
-{id:99,category:'aluminum',question:'Pb²⁺に硫化水素H₂Sを通じたときに黒色沈殿が生じる。この反応の利用を答えよ。',answer:'Pb²⁺の検出（確認反応）に利用。\nまた酢酸鉛試験紙でH₂Sの検出にも利用される。',explanation:'Pb(CH₃COO)₂試験紙はH₂Sで黒変（PbS生成）するため、H₂Sの検出に使われる。'},
-{id:100,category:'aluminum',question:'アルミニウム・スズ・鉛に共通する性質（両性金属）を示す一般式で表せ。',answer:'酸との反応：M + 2nHCl → MCl_{2n} + nH₂↑\nNaOHとの反応：M + 2nNaOH + 2nH₂O → Na_{2n}[M(OH)_{4n}] + nH₂↑\n（nはイオンの価数/2）',explanation:'Al（3価）・Sn（2価・4価）・Pb（2価）いずれも酸塩基両方に溶けてH₂を発生する。'}
+{id:3,category:'alkali',
+question:'アルカリ金属の価電子数を答えよ。',
+answer:'1個',
+explanation:'最外殻に電子が1個あり、1価の陽イオンになりやすい。'},
+
+{id:4,category:'alkali',
+question:'アルカリ金属の融点・密度は一般的な金属と比べてどうか。',
+answer:'融点が低く、密度が小さい（軽い）。\nLi・Na・Kは密度が水より小さく、水に浮く。',
+explanation:'原子番号が大きくなるほど融点は低くなる傾向がある。'},
+
+{id:5,category:'alkali',
+question:'アルカリ金属を石油中に保存する理由を答えよ。',
+answer:'空気中の水分・酸素と激しく反応するため、石油中に保存して空気と遮断する。',
+explanation:'Na・Kなどは空気中に放置すると酸化・発火の危険がある。'},
+
+{id:6,category:'alkali',
+question:'アルカリ金属の反応性は原子番号が大きくなるとどう変化するか。',
+answer:'原子番号が大きいほど反応性が強くなる。\nLi < Na < K < Rb < Cs の順に強い。',
+explanation:'原子番号が大きいほどイオン化エネルギーが小さく、陽イオンになりやすい。'},
+
+{id:7,category:'alkali',
+question:'アルカリ金属と水の反応の特徴を答えよ。',
+answer:'水と反応してH₂を発生し、強塩基性の水酸化物水溶液を生じる。\n2M + 2H₂O → 2MOH + H₂↑',
+explanation:'K以降は発火しながら激しく反応する。'},
+
+{id:8,category:'alkali',
+question:'Naと水の反応式を書け。',
+answer:'2Na + 2H₂O → 2NaOH + H₂↑',
+explanation:'NaOHは強塩基。Naは水面を激しく動き回りながら溶ける。'},
+
+{id:9,category:'alkali',
+question:'Naを空気中で穏やかに加熱したときの反応式と生成物を答えよ。',
+answer:'4Na + O₂ → 2Na₂O（酸化ナトリウム）',
+explanation:'穏やかな条件ではNa₂Oが生成する。'},
+
+{id:10,category:'alkali',
+question:'Naを過剰な酸素中で燃焼させたときの反応式と生成物を答えよ。',
+answer:'2Na + O₂ → Na₂O₂（過酸化ナトリウム）',
+explanation:'Na₂O₂（過酸化ナトリウム）は強い酸化剤。水と反応してH₂O₂を生じる。'},
+
+{id:11,category:'alkali',
+question:'NaOHの色・状態と特有の性質を答えよ。',
+answer:'白色固体。水に非常によく溶けて強塩基性を示す。潮解性をもつ。',
+explanation:'潮解性：空気中の水分を吸収して自ら溶けていく性質。密封保存が必要。'},
+
+{id:12,category:'alkali',
+question:'NaOHが空気中のCO₂（少量）を吸収する反応式を書け。',
+answer:'2NaOH + CO₂ → Na₂CO₃ + H₂O',
+explanation:'CO₂少量ではNa₂CO₃（炭酸ナトリウム）が生成する。'},
+
+{id:13,category:'alkali',
+question:'NaOHが空気中のCO₂（過剰）を吸収する反応式を書け。',
+answer:'NaOH + CO₂ → NaHCO₃',
+explanation:'CO₂過剰ではNaHCO₃（炭酸水素ナトリウム）が生成する。'},
+
+{id:14,category:'alkali',
+question:'Na₂CO₃と希塩酸HClの反応式を書け。',
+answer:'Na₂CO₃ + 2HCl → 2NaCl + H₂O + CO₂↑',
+explanation:'弱酸の塩に強酸を加えると弱酸が遊離する。CO₂が発生する。'},
+
+{id:15,category:'alkali',
+question:'NaHCO₃と希塩酸HClの反応式を書け。',
+answer:'NaHCO₃ + HCl → NaCl + H₂O + CO₂↑',
+explanation:'重曹（ベーキングパウダー）の主成分。胃薬にも利用。'},
+
+{id:16,category:'alkali',
+question:'NaHCO₃を加熱したときの熱分解反応式を書け。',
+answer:'2NaHCO₃ → Na₂CO₃ + H₂O + CO₂↑',
+explanation:'加熱するとNa₂CO₃が残る。ケーキが膨らむ原理。'},
+
+{id:17,category:'alkali',
+question:'Na₂CO₃·10H₂Oの俗称を答えよ。',
+answer:'洗濯ソーダ',
+explanation:'炭酸ナトリウム十水和物。'},
+
+{id:18,category:'alkali',
+question:'「風解」とはどういう現象か。Na₂CO₃·10H₂Oを例に答えよ。',
+answer:'結晶が乾燥空気中で結晶水を失い粉末状になる現象。\nNa₂CO₃·10H₂O → Na₂CO₃·H₂O + 9H₂O',
+explanation:'Na₂CO₃·10H₂Oは乾燥空気に放置すると白色粉末のNa₂CO₃·H₂Oになる。'},
+
+{id:19,category:'alkali',
+question:'ソルベー法の主反応式を書け。',
+answer:'NaCl + NH₃ + H₂O + CO₂ → NaHCO₃↓ + NH₄Cl',
+explanation:'飽和食塩水にNH₃とCO₂を吹き込むとNaHCO₃が先に沈殿する。'},
+
+{id:20,category:'alkali',
+question:'ソルベー法でNaHCO₃をNa₂CO₃に変える工程の反応式を書け。',
+answer:'2NaHCO₃ → Na₂CO₃ + H₂O + CO₂↑（加熱）',
+explanation:'生成したNa₂CO₃はガラス・洗剤・製紙の原料として重要。'},
+
+{id:21,category:'alkali',
+question:'ソルベー法でNH₃を回収する工程の反応式を書け。',
+answer:'2NH₄Cl + Ca(OH)₂ → CaCl₂ + 2NH₃↑ + 2H₂O',
+explanation:'副生成物のNH₄Clに消石灰を加えてNH₃を回収・循環利用する。'},
+
+{id:22,category:'alkali',
+question:'塩化ナトリウム水溶液を電気分解したときの陰極・陽極での変化を答えよ。',
+answer:'陽極：2Cl⁻ → Cl₂↑ + 2e⁻\n陰極：2H₂O + 2e⁻ → H₂↑ + 2OH⁻',
+explanation:'イオン交換膜法では陽極側にCl₂、陰極側にH₂とNaOHが得られる。'},
+
+{id:23,category:'alkali',
+question:'炎色反応でLi・Na・Kはそれぞれ何色か。',
+answer:'Li：赤色\nNa：黄色\nK：紫色',
+explanation:'Naは微量でも鮮明な黄色を示す。花火の色に利用される。'},
+
+// ============================================================
+// アルカリ土類金属（image3・image4 より）
+// ============================================================
+{id:24,category:'alkaline',
+question:'アルカリ土類金属は何族の元素か。',
+answer:'第2族元素',
+explanation:'Be・Mg・Ca・Sr・Ba・Raが含まれる。価電子は2個。'},
+
+{id:25,category:'alkaline',
+question:'アルカリ土類金属に含まれる元素を原子番号順に答えよ。',
+answer:'Be（ベリリウム）・Mg（マグネシウム）・Ca（カルシウム）・Sr（ストロンチウム）・Ba（バリウム）・Ra（ラジウム）',
+explanation:'価電子2個。2価の陽イオンになりやすい。'},
+
+{id:26,category:'alkaline',
+question:'アルカリ土類金属の融点はアルカリ金属と比べてどうか。',
+answer:'アルカリ金属より融点が高い。',
+explanation:'価電子が2個あり金属結合が強いため、アルカリ金属より融点・密度が大きい傾向がある。'},
+
+{id:27,category:'alkaline',
+question:'アルカリ土類金属のうち冷水と反応しないものはどれか。理由も答えよ。',
+answer:'BeとMg。\n理由：表面に緻密な酸化被膜が形成されて内部が保護されるから。',
+explanation:'MgはCaと異なり冷水に反応しない。熱水や酸には溶ける。'},
+
+{id:28,category:'alkaline',
+question:'Mgと酸素の反応式を書け。また燃焼の特徴を答えよ。',
+answer:'2Mg + O₂ → 2MgO\n特徴：白色の強い光を放って燃焼する。',
+explanation:'花火・フラッシュ照明・発炎筒に利用される。'},
+
+{id:29,category:'alkaline',
+question:'Mgと熱水の反応式を書け。',
+answer:'Mg + 2H₂O → Mg(OH)₂ + H₂↑',
+explanation:'冷水とはほぼ反応しないが、熱水とは反応する。'},
+
+{id:30,category:'alkaline',
+question:'Caと冷水の反応式を書け。',
+answer:'Ca + 2H₂O → Ca(OH)₂ + H₂↑',
+explanation:'Ca(OH)₂（消石灰）が生成。水溶液が石灰水で弱塩基性。'},
+
+{id:31,category:'alkaline',
+question:'CaO（生石灰）と水の反応式と熱的特徴を答えよ。',
+answer:'CaO + H₂O → Ca(OH)₂\n特徴：激しく発熱する（発熱反応）',
+explanation:'Ca(OH)₂（消石灰）が生成する。乾燥剤・土壌改良材に利用。'},
+
+{id:32,category:'alkaline',
+question:'Ca(OH)₂（消石灰）を加熱したときの反応式を書け。',
+answer:'Ca(OH)₂ → CaO + H₂O',
+explanation:'加熱による脱水分解でCaO（生石灰）に戻る。'},
+
+{id:33,category:'alkaline',
+question:'CaCO₃（石灰石）を強熱したときの反応式を書け。',
+answer:'CaCO₃ → CaO + CO₂↑',
+explanation:'セメント・石灰製造の基本反応。'},
+
+{id:34,category:'alkaline',
+question:'CaCO₃に希塩酸を加えたときの反応式を書け。',
+answer:'CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂↑',
+explanation:'石灰石・大理石・貝殻に塩酸を加えるとCO₂が発生する。'},
+
+{id:35,category:'alkaline',
+question:'石灰水（Ca(OH)₂水溶液）にCO₂を少量通じたときの変化と反応式を書け。',
+answer:'白濁する。\nCa(OH)₂ + CO₂ → CaCO₃↓ + H₂O',
+explanation:'白色沈殿CaCO₃が生じる。CO₂の検出に利用される。'},
+
+{id:36,category:'alkaline',
+question:'石灰水にCO₂を過剰に通じると白濁が消える。その反応式を書け。',
+answer:'CaCO₃ + H₂O + CO₂ → Ca(HCO₃)₂',
+explanation:'可溶性のCa(HCO₃)₂（炭酸水素カルシウム）が生成して沈殿が溶ける。'},
+
+{id:37,category:'alkaline',
+question:'Ca(HCO₃)₂水溶液を加熱したときの反応式と自然界での例を答えよ。',
+answer:'Ca(HCO₃)₂ → CaCO₃↓ + H₂O + CO₂↑\n自然界：鍾乳洞・鍾乳石の形成',
+explanation:'地下水中のCa(HCO₃)₂が洞窟内でCaCO₃として析出する。'},
+
+{id:38,category:'alkaline',
+question:'石膏CaSO₄·2H₂Oを加熱して得られる「焼き石膏」の化学式を答えよ。また焼き石膏に水を加えるとどうなるか。',
+answer:'焼き石膏：CaSO₄·½H₂O\nCaSO₄·½H₂O + 3/2 H₂O → CaSO₄·2H₂O\n特徴：発熱しながら固化する',
+explanation:'石膏を120〜140℃で加熱すると焼き石膏になる。医療用ギプス・建築材料に利用。'},
+
+{id:39,category:'alkaline',
+question:'アルカリ土類金属の硫酸塩の水への溶解性を原子番号順に答えよ。',
+answer:'MgSO₄：よく溶ける\nCaSO₄：わずかに溶ける\nBaSO₄：ほとんど溶けない',
+explanation:'原子番号が大きくなるほど硫酸塩は溶けにくくなる。'},
+
+{id:40,category:'alkaline',
+question:'アルカリ土類金属の水酸化物の水への溶解性を原子番号順に答えよ。',
+answer:'Mg(OH)₂：ほとんど溶けない\nCa(OH)₂：わずかに溶ける\nBa(OH)₂：よく溶ける',
+explanation:'原子番号が大きくなるほど水酸化物は溶けやすくなる（硫酸塩と逆の傾向）。'},
+
+{id:41,category:'alkaline',
+question:'Ba²⁺の確認反応を反応式と沈殿の色で答えよ。',
+answer:'Ba²⁺ + SO₄²⁻ → BaSO₄↓（白色沈殿）\n酸にも水にも溶けない',
+explanation:'BaSO₄は難溶性で化学的に安定。X線造影剤（バリウム検査）に利用。'},
+
+{id:42,category:'alkaline',
+question:'炎色反応でCa・Sr・Baはそれぞれ何色か。',
+answer:'Ca：橙赤色\nSr：赤色\nBa：黄緑色',
+explanation:'花火の色として利用される。'},
+
+{id:43,category:'alkaline',
+question:'アルカリ土類金属の炭酸塩（MgCO₃・CaCO₃・BaCO₃）の水への溶解性を答えよ。',
+answer:'MgCO₃・CaCO₃・BaCO₃はいずれも水に溶けにくい（難溶）。',
+explanation:'炭酸塩として沈殿させて各イオンを分離・確認できる。'},
+
+// ============================================================
+// Al・Sn・Pb（image1・image6・image7 より）
+// ============================================================
+{id:44,category:'aluminum',
+question:'Alの原料鉱石の名称と化学式を答えよ。',
+answer:'ボーキサイト（Al₂O₃·nH₂O）',
+explanation:'アルミナ（Al₂O₃）として含まれる。'},
+
+{id:45,category:'aluminum',
+question:'Alの工業的製錬方法の概要を答えよ（製法名は問わない）。',
+answer:'アルミナ（Al₂O₃）を溶融させて電気分解（溶融塩電解）する。',
+explanation:'大量の電力を消費するため「電気の缶詰」と呼ばれる。'},
+
+{id:46,category:'aluminum',
+question:'Al単体の特徴を答えよ（色・密度の傾向・特有の性質）。',
+answer:'銀白色。密度が小さく軽い金属。\n表面に緻密なAl₂O₃の酸化被膜を形成して耐食性をもつ。',
+explanation:'電気・熱伝導性も高い。'},
+
+{id:47,category:'aluminum',
+question:'Alの不動態とはどういう状態か。反応式も書け。',
+answer:'表面に緻密なAl₂O₃の酸化被膜が形成され内部を保護する状態。\n4Al + 3O₂ → 2Al₂O₃',
+explanation:'濃硝酸・濃硫酸でも不動態になり溶けない。'},
+
+{id:48,category:'aluminum',
+question:'Alと希塩酸HClの反応式を書け。',
+answer:'2Al + 6HCl → 2AlCl₃ + 3H₂↑',
+explanation:'AlはH₂よりイオン化傾向が大きいため酸に溶けてH₂を発生する。'},
+
+{id:49,category:'aluminum',
+question:'Alと希硫酸H₂SO₄の反応式を書け。',
+answer:'2Al + 3H₂SO₄ → Al₂(SO₄)₃ + 3H₂↑',
+explanation:'希硫酸には溶けるが、濃硫酸・濃硝酸では不動態になり溶けない。'},
+
+{id:50,category:'aluminum',
+question:'Alと水酸化ナトリウムNaOH水溶液の反応式を書け。',
+answer:'2Al + 2NaOH + 6H₂O → 2Na[Al(OH)₄] + 3H₂↑',
+explanation:'Alが両性金属であることを示す反応。Na[Al(OH)₄]はテトラヒドロキシドアルミン酸ナトリウム。'},
+
+{id:51,category:'aluminum',
+question:'テルミット反応の反応式と特徴を答えよ。',
+answer:'2Al + Fe₂O₃ → Al₂O₃ + 2Fe\n特徴：約3000℃の高熱を発生する',
+explanation:'鉄道レールの現場溶接（テルミット溶接）に利用。'},
+
+{id:52,category:'aluminum',
+question:'Al(OH)₃の両性を示す反応式を2つ書け。',
+answer:'酸側：Al(OH)₃ + 3HCl → AlCl₃ + 3H₂O\n塩基側：Al(OH)₃ + NaOH → Na[Al(OH)₄]',
+explanation:'Al(OH)₃は両性水酸化物のため酸にも塩基にも溶ける。'},
+
+{id:53,category:'aluminum',
+question:'Al³⁺水溶液にNH₃水を加えたときの変化を答えよ。過剰に加えるとどうなるか。',
+answer:'白色沈殿Al(OH)₃が生成する。\nAl³⁺ + 3OH⁻ → Al(OH)₃↓\n過剰に加えても溶けない。',
+explanation:'NH₃水は弱塩基のためAl(OH)₃を溶かすほどの塩基性がない。NaOH過剰なら溶ける。'},
+
+{id:54,category:'aluminum',
+question:'AlCl₃水溶液にNH₃水を加えたときの反応式を書け。',
+answer:'AlCl₃ + 3NH₃ + 3H₂O → Al(OH)₃↓ + 3NH₄Cl',
+explanation:'白色のAl(OH)₃が沈殿する。'},
+
+{id:55,category:'aluminum',
+question:'Al₂O₃の両性を示す反応式を2つ書け。',
+answer:'酸側：Al₂O₃ + 6HCl → 2AlCl₃ + 3H₂O\n塩基側：Al₂O₃ + 2NaOH + 3H₂O → 2Na[Al(OH)₄]',
+explanation:'Al₂O₃は両性酸化物。'},
+
+{id:56,category:'aluminum',
+question:'ミョウバンの化学式・正式名称・結晶形を答えよ。',
+answer:'化学式：AlK(SO₄)₂·12H₂O\n正式名称：硫酸アルミニウムカリウム十二水和物\n結晶形：正八面体',
+explanation:'複塩。水溶液中ではAl³⁺・K⁺・SO₄²⁻に電離する。'},
+
+{id:57,category:'aluminum',
+question:'ミョウバンの電離式を書け。',
+answer:'AlK(SO₄)₂ → Al³⁺ + K⁺ + 2SO₄²⁻',
+explanation:'12H₂Oは結晶水。'},
+
+{id:58,category:'aluminum',
+question:'ミョウバンの主な用途を2つ答えよ。',
+answer:'① 媒染剤（染色時の色止め）\n② 浄水剤（Al(OH)₃のコロイドが不純物を吸着・沈殿させる）',
+explanation:'水に溶かすとAl³⁺が加水分解してAl(OH)₃のコロイドを形成する。'},
+
+{id:59,category:'aluminum',
+question:'スズSnの代表的な酸化数と代表化合物を答えよ。',
+answer:'+2（SnCl₂など）と+4（SnCl₄・SnO₂など）',
+explanation:'Sn²⁺は還元剤として働く。SnO₂は白色の両性酸化物。'},
+
+{id:60,category:'aluminum',
+question:'Snと希塩酸の反応式を書け。',
+answer:'Sn + 2HCl → SnCl₂ + H₂↑',
+explanation:'SnはH₂よりイオン化傾向が大きいため酸に溶けてH₂を発生する。'},
+
+{id:61,category:'aluminum',
+question:'SnとNaOH水溶液の反応式を書け。',
+answer:'Sn + 2NaOH + 2H₂O → Na₂[Sn(OH)₄] + H₂↑',
+explanation:'Snも両性金属。塩基にも溶けてH₂を発生する。'},
+
+{id:62,category:'aluminum',
+question:'SnCl₂·2H₂O（塩化スズ(II)）はどのような性質をもつか。',
+answer:'還元剤として働く。\nSn²⁺ → Sn⁴⁺ + 2e⁻ （酸化されることで相手を還元する）',
+explanation:'Fe³⁺をFe²⁺に還元するなど、還元剤として利用される。'},
+
+{id:63,category:'aluminum',
+question:'ブリキとはどういうものか。また傷がつくと腐食しやすい理由を答えよ。',
+answer:'鉄板にスズ（Sn）をめっきしたもの。\n理由：Snのイオン化傾向がFeより小さく、傷がつくとFeが先に酸化されるから。',
+explanation:'イオン化傾向：Sn < Fe。缶詰などに使われるが傷に弱い。'},
+
+{id:64,category:'aluminum',
+question:'トタンとはどういうものか。傷がついても腐食しにくい理由を答えよ。',
+answer:'鉄板に亜鉛（Zn）をめっきしたもの。\n理由：Znのイオン化傾向がFeより大きく、傷がつくとZnが先に溶けてFeを保護するから（犠牲防食）。',
+explanation:'イオン化傾向：Zn > Fe。屋根・外壁材に使われる。'},
+
+{id:65,category:'aluminum',
+question:'鉛Pbの代表的な酸化数を2つ答えよ。',
+answer:'+2（PbCl₂・PbSO₄・PbS など）\n+4（PbO₂ など）',
+explanation:'Pb²⁺が安定。PbO₂（+4）は鉛蓄電池の正極として重要。'},
+
+{id:66,category:'aluminum',
+question:'Pb単体の特徴を答えよ。',
+answer:'やわらかく加工しやすい。密度が大きい。\nX線を遮蔽する性質をもつ。',
+explanation:'放射線遮蔽材・鉛蓄電池に利用。'},
+
+{id:67,category:'aluminum',
+question:'Pb²⁺に希硫酸を加えたときの反応式と沈殿の色を答えよ。',
+answer:'Pb²⁺ + SO₄²⁻ → PbSO₄↓（白色沈殿）',
+explanation:'PbSO₄は難溶性。Pb²⁺の確認反応。'},
+
+{id:68,category:'aluminum',
+question:'Pb²⁺に希塩酸を加えたときの反応式と沈殿の特徴を答えよ。',
+answer:'Pb²⁺ + 2Cl⁻ → PbCl₂↓（白色沈殿）\n冷水に難溶、熱水に溶ける',
+explanation:'Ag⁺との分離に利用（PbCl₂は熱水に溶けるがAgClは溶けない）。'},
+
+{id:69,category:'aluminum',
+question:'Pb²⁺にH₂Sを通じたときの反応式と沈殿の色を答えよ。',
+answer:'Pb²⁺ + S²⁻ → PbS↓（黒色沈殿）',
+explanation:'PbSは黒色で難溶性。'},
+
+{id:70,category:'aluminum',
+question:'Pb²⁺に少量のNaOH水溶液を加えたときの変化を答えよ。また過剰に加えるとどうなるか。',
+answer:'白色沈殿Pb(OH)₂が生成する。\nPb²⁺ + 2OH⁻ → Pb(OH)₂↓\n過剰NaOHでは溶解：Pb(OH)₂ + 2OH⁻ → [Pb(OH)₄]²⁻',
+explanation:'Pb(OH)₂は両性水酸化物。Al(OH)₃・Zn(OH)₂と同様。'},
+
+{id:71,category:'aluminum',
+question:'Pb(NO₃)₂水溶液にK₂CrO₄（クロム酸カリウム）水溶液を加えたときの反応式と沈殿の色を答えよ。',
+answer:'Pb²⁺ + CrO₄²⁻ → PbCrO₄↓（黄色沈殿）',
+explanation:'PbCrO₄は黄色沈殿。Pb²⁺の確認反応に使われる。'},
+
+{id:72,category:'aluminum',
+question:'鉛蓄電池の正極・負極・電解液を答えよ。',
+answer:'正極：PbO₂（二酸化鉛）\n負極：Pb（鉛）\n電解液：希硫酸（H₂SO₄）',
+explanation:'放電すると両極ともPbSO₄になる。充電で元に戻る。'},
+
+{id:73,category:'aluminum',
+question:'鉛蓄電池の放電時の各極の反応式を書け。',
+answer:'正極：PbO₂ + SO₄²⁻ + 4H⁺ + 2e⁻ → PbSO₄ + 2H₂O\n負極：Pb + SO₄²⁻ → PbSO₄ + 2e⁻',
+explanation:'放電するほど希硫酸の濃度が薄くなる。'},
+
+{id:74,category:'aluminum',
+question:'両性金属として代表的な4種を答えよ。',
+answer:'Al（アルミニウム）・Zn（亜鉛）・Sn（スズ）・Pb（鉛）',
+explanation:'いずれも酸にもNaOH水溶液にも溶けてH₂を発生する。'},
+
+{id:75,category:'aluminum',
+question:'PbとNaOH水溶液の反応式を書け。',
+answer:'Pb + 2NaOH + 2H₂O → Na₂[Pb(OH)₄] + H₂↑',
+explanation:'Pbも両性金属。塩基にも溶けてH₂を発生する。'},
+
+{id:76,category:'aluminum',
+question:'SnO₂（酸化スズ(IV)）の性質を答えよ。',
+answer:'白色固体。両性酸化物。\n酸にも塩基にも溶ける。',
+explanation:'SnO₂ + 4HCl → SnCl₄ + 2H₂O（酸側）\nSnO₂ + 2NaOH → Na₂SnO₃ + H₂O（塩基側）'},
+
+{id:77,category:'aluminum',
+question:'Al₂O₃が両性酸化物であることを示す反応を1つ選んで反応式で書け。',
+answer:'（酸側の例）Al₂O₃ + 6HCl → 2AlCl₃ + 3H₂O\nまたは\n（塩基側の例）Al₂O₃ + 2NaOH + 3H₂O → 2Na[Al(OH)₄]',
+explanation:'Al₂O₃は酸にも塩基にも溶ける両性酸化物。'},
+
+{id:78,category:'aluminum',
+question:'Al(OH)₃が両性水酸化物であることを確認するには、どのような試薬を加えればよいか。',
+answer:'希塩酸（または希硫酸）を加えると溶ける（酸側）。\nNaOH水溶液を加えても溶ける（塩基側）。\nNH₃水（過剰）では溶けない。',
+explanation:'NH₃水は弱塩基のためAl(OH)₃を溶かせない点が重要。'},
+
+{id:79,category:'aluminum',
+question:'Alがジュラルミンに使われる理由を答えよ。',
+answer:'Alは密度が小さく軽量であり、Cu・Mgとの合金（ジュラルミン）にすることで強度が増すから。',
+explanation:'航空機・船体などに利用される。'},
+
+{id:80,category:'aluminum',
+question:'アルマイトとはどういうものか。',
+answer:'アルミニウムを陽極として電気分解（陽極酸化）し、表面のAl₂O₃被膜を人工的に厚くしたもの。',
+explanation:'耐食性・硬さが向上する。鍋・建材などに利用される。'},
+
+{id:81,category:'aluminum',
+question:'Snの酸化数+2と+4について、SnCl₂は何色で何に使われるか。',
+answer:'SnCl₂（塩化スズ(II)）：白色固体。還元剤として利用される。',
+explanation:'Sn²⁺はSn⁴⁺になりやすいため、強い還元作用をもつ。'},
+
+{id:82,category:'aluminum',
+question:'PbはなぜX線遮蔽材として使われるか。',
+answer:'密度が大きく（重い金属）、X線を効率よく吸収・遮蔽できるから。',
+explanation:'放射線医学・原子力施設の遮蔽材として重要。'},
+
+{id:83,category:'aluminum',
+question:'Alの不動態を利用した身近な製品例を答えよ。',
+answer:'アルマイト製品（鍋・水筒・建材など）',
+explanation:'陽極酸化によってAl₂O₃被膜を厚くしたアルマイトが腐食を防ぐ。'}
+
 ];
 
 const WRONG_KEY='chem_flash1_wrong';
